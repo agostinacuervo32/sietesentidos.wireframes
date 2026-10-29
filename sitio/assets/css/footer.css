@@ -1,0 +1,242 @@
+/* ==========================================================================
+   FOOTER — logo, datos de contacto, botones y derechos reservados
+   Fondo blanco: el único bloque con color es la franja de derechos
+   reservados. Móvil: logo centrado, los dos botones en una fila y los
+   datos en una grilla de 2 columnas. Escritorio (desde 1200px): logo a la
+   izquierda y tres columnas separadas por líneas verticales.
+   ========================================================================== */
+
+.footer {
+  padding-top: 58px;
+}
+
+.footer__contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 32px;
+}
+
+.footer__logo {
+  display: block;
+  width: 193px;
+  margin-bottom: 30px;
+}
+
+.footer__logo img {
+  width: 100%;
+  height: auto;
+}
+
+/* Móvil: los botones primero y los datos en grilla de 2 columnas
+   (en celulares muy chicos, menos de ~340px, pasan a 1 columna para que
+   "sietesentidos2023" no se salga de la pantalla) */
+.footer__columnas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 18px 12px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.footer__columna {
+  display: contents;
+}
+
+.footer__columna--botones {
+  display: flex;
+  grid-column: 1 / -1;
+  order: -1;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* Móvil: menos padding para que los dos botones entren en una fila */
+.footer__columna--botones .btn {
+  padding-inline: 16px;
+}
+
+.footer__dato--direccion { order: 1; }
+.footer__dato--horario   { order: 2; }
+.footer__dato--whatsapp  { order: 3; }
+.footer__dato--instagram { order: 4; }
+
+.footer__dato,
+.footer__enlace {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-texto);
+  line-height: 1.25;
+  color: var(--color-texto);
+}
+
+.footer__dato .icono {
+  color: var(--verde);
+}
+
+.footer__enlace {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: var(--borde-linea);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--duracion-corta) var(--ease);
+}
+
+.footer__enlace:hover {
+  text-decoration-color: var(--verde);
+}
+
+/* ---------- Variante de todas las páginas: borde que se traza al hover ----------
+   Igual que los links del menú (header.css): el borde envuelve ícono + texto
+   y se revela de izquierda a derecha mientras las letras se aprietan.
+   El margen negativo compensa el padding para no mover la alineación. */
+.footer--trazo .footer__enlace {
+  position: relative;
+  margin: -8px -12px;
+  padding: 8px 12px;
+  border-radius: var(--radio-full);
+  text-decoration: none;
+  transition:
+    color var(--duracion-corta) var(--ease),
+    letter-spacing var(--duracion-corta) var(--ease);
+}
+
+.footer--trazo .footer__enlace::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--borde-boton) solid var(--verde);
+  border-radius: inherit;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--duracion-larga) var(--ease);
+  pointer-events: none;
+}
+
+.footer--trazo .footer__enlace .icono {
+  transition: color var(--duracion-corta) var(--ease);
+}
+
+/* Ancho fijo: una copia invisible del texto (data-texto) reserva su ancho
+   sin apretar, así al hover ni el link ni la columna se achican */
+.footer--trazo .footer__enlace [data-texto] {
+  display: inline-grid;
+}
+
+.footer--trazo .footer__enlace [data-texto]::after {
+  content: attr(data-texto);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  letter-spacing: normal;
+}
+
+.footer--trazo .footer__enlace:hover,
+.footer--trazo .footer__enlace:focus-visible {
+  color: var(--rosa);
+  letter-spacing: -0.06em;
+  transition:
+    color var(--duracion-corta) var(--ease),
+    letter-spacing var(--duracion-larga) var(--ease);
+}
+
+.footer--trazo .footer__enlace:hover .icono,
+.footer--trazo .footer__enlace:focus-visible .icono {
+  color: var(--rosa);
+}
+
+.footer--trazo .footer__enlace:hover::after,
+.footer--trazo .footer__enlace:focus-visible::after {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ---------- Derechos reservados ---------- */
+.footer__legal {
+  padding: 8px var(--margen);
+  background: var(--verde);
+  color: var(--blanco);
+  font-family: var(--fuente-texto);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--fs-aclaracion);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.footer__legal span {
+  display: block;
+}
+
+/* ==========================================================================
+   Escritorio (desde 1200px)
+   ========================================================================== */
+@media (min-width: 1200px) {
+  .footer {
+    padding-top: 93px;
+  }
+
+  .footer__contenedor {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--stack-md);
+    padding-bottom: 38px;
+  }
+
+  .footer__logo {
+    flex: none;
+    width: clamp(280px, 21vw, 400px);
+    margin-bottom: 0;
+  }
+
+  .footer__columnas {
+    display: flex;
+    width: auto;
+    max-width: none;
+  }
+
+  .footer__columna {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    min-height: 107px;
+    padding: 0 clamp(20px, 2.6vw, 50px) 0 18px;
+    border-left: var(--borde-boton) solid var(--verde);
+  }
+
+  .footer__columna--botones {
+    order: 0;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 0;
+    padding-right: 0;
+  }
+
+  .footer__columna--botones .btn {
+    padding: var(--boton-padding);
+  }
+
+  .footer__dato,
+  .footer__enlace {
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Vuelve el orden del HTML (Instagram arriba de WhatsApp) */
+  .footer__dato {
+    order: 0;
+  }
+
+  /* Separación extra entre Instagram y WhatsApp para que sus bordes
+     del hover no queden pegados */
+  .footer--trazo .footer__dato--whatsapp {
+    margin-top: 8px;
+  }
+
+  .footer__legal span {
+    display: inline;
+  }
+}

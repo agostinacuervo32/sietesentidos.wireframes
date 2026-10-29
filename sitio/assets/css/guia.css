@@ -1,0 +1,104 @@
+/* ==========================================================================
+   LO QUE NOS GUÍA — acordeón de Valores, Visión y Misión + bloque del equipo
+   El acordeón tiene sus estilos en acordeon-paneles.css (Misión abierta por
+   defecto). Escritorio: dos columnas, acordeón | equipo.
+   ========================================================================== */
+
+.guia {
+  padding-bottom: var(--seccion-padding);
+}
+
+.guia__contenedor {
+  display: grid;
+  gap: var(--stack-md);
+}
+
+.guia__titulo,
+.equipo__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ==========================================================================
+   Equipo
+   ========================================================================== */
+.equipo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--stack-sm);
+}
+
+.equipo__botones {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.equipo__imagen {
+  width: 100%;
+  margin-top: var(--stack-md);
+  aspect-ratio: 357 / 253;
+  border-radius: var(--radio);
+  overflow: hidden;
+  -webkit-mask: var(--mascara-apretada) center / 100% 100% no-repeat;
+  mask: var(--mascara-apretada) center / 100% 100% no-repeat;
+}
+
+/* Fotos del equipo en blanco y negro */
+.equipo__imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  filter: grayscale(1);
+}
+
+/* ==========================================================================
+   Escritorio (desde 1200px)
+   ========================================================================== */
+@media (min-width: 1200px) {
+
+  .guia__contenedor {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 32px;
+  }
+
+  .guia__titulo {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  /* Acordeón (estilos en acordeon-paneles.css): se estira hasta el alto de la
+     columna del equipo (foto + título + botones); 420px como mínimo para la Misión */
+  .guia .acordeon-paneles {
+    min-height: 420px;
+  }
+
+  /* --- Equipo: imagen arriba, título y botones debajo --- */
+  .equipo {
+    margin-top: 0;
+  }
+
+  .equipo__imagen {
+    order: -1;
+    margin-top: 0;
+    margin-bottom: 32px;
+    aspect-ratio: 792 / 297;   /* medida del wireframe */
+  }
+
+  /* La foto es horizontal y la franja muy baja: se sube el encuadre
+     para que entren las caras de la fila de atrás */
+  .equipo__imagen img {
+    object-position: 50% 22%;
+  }
+
+  .equipo__botones {
+    margin-top: 28px;
+  }
+}

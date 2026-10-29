@@ -1,0 +1,366 @@
+/* ==========================================================================
+   AGENDA — horarios por especialidad con desplegable (ver agenda.js)
+   Móvil: lista por día. Desde 768px: grilla semanal de lunes a viernes,
+   de 9 a 21 h. Se usa en el Inicio (todas las especialidades) y en
+   Apoyo escolar (Apoyo escolar e Inglés).
+   ========================================================================== */
+
+/* Familia de color de la especialidad (desplegable y panel) */
+.agenda__control--verde,
+.agenda__panel--verde {
+  --familia-pastel: var(--verde-pastel);
+  --familia-medio: var(--verde);
+  --familia-oscuro: var(--verde-oscuro);
+  --familia-sobre-medio: var(--blanco);
+}
+
+.agenda__control--rosa,
+.agenda__panel--rosa {
+  --familia-pastel: var(--rosa-pastel);
+  --familia-medio: var(--rosa);
+  --familia-oscuro: var(--rosa-oscuro);
+  --familia-sobre-medio: var(--blanco);
+}
+
+.agenda__control--naranja,
+.agenda__panel--naranja {
+  --familia-pastel: var(--naranja-pastel);
+  --familia-medio: var(--naranja);
+  --familia-oscuro: var(--naranja-oscuro);
+  --familia-sobre-medio: var(--negro);
+}
+
+.agenda__control--amarillo,
+.agenda__panel--amarillo {
+  --familia-pastel: var(--amarillo-pastel);
+  --familia-medio: var(--amarillo);
+  --familia-oscuro: var(--amarillo-oscuro);
+  --familia-sobre-medio: var(--negro);
+}
+
+/* Color de cada profesional dentro de la especialidad */
+.agenda__profesional--1,
+.agenda__turno--1 {
+  --turno-fondo: var(--familia-pastel);
+  --turno-texto: var(--familia-oscuro);
+}
+
+.agenda__profesional--2,
+.agenda__turno--2 {
+  --turno-fondo: var(--familia-medio);
+  --turno-texto: var(--familia-sobre-medio);
+}
+
+.agenda {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Desplegable de especialidad (dentro de la agenda) ---------- */
+.agenda__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin: 0 0 var(--stack-sm) auto;   /* pegado al borde derecho de la agenda */
+  color: var(--familia-oscuro);
+}
+
+/* Sin JS se ven todas las especialidades y el desplegable no hace falta */
+.agenda:not(.agenda--js) .agenda__control {
+  display: none;
+}
+
+/* Punto con el color de la especialidad elegida */
+.agenda__control::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radio-full);
+  background: var(--familia-medio);
+  pointer-events: none;
+}
+
+.agenda__desplegable {
+  appearance: none;
+  width: var(--ancho-desplegable);
+  min-height: 44px;
+  padding: 0 48px 0 34px;
+  border: var(--borde-boton) solid var(--familia-oscuro);
+  border-radius: var(--radio-full);
+  background: var(--familia-pastel);
+  color: inherit;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: calc(var(--fs-boton) - var(--fs-ajuste-horarios));
+  cursor: var(--cursor-claro);
+  transition:
+    background-color var(--duracion-corta) var(--ease),
+    border-color var(--duracion-corta) var(--ease);
+}
+
+.agenda__desplegable:hover {
+  background: color-mix(in srgb, var(--familia-pastel) 80%, var(--familia-medio));
+}
+
+.agenda__desplegable option {
+  background: var(--blanco);
+  color: var(--negro);
+  font-weight: 400;
+}
+
+.agenda__chevron {
+  position: absolute;
+  right: 16px;
+  pointer-events: none;
+}
+
+/* ---------- Calendario (móvil: lista por día) ---------- */
+.agenda__calendario {
+  flex: 1;
+  padding: 16px;
+  border: var(--borde-boton) solid var(--linea-suave);
+  border-radius: var(--radio);
+}
+
+/* La grilla de fondo solo existe en la vista semanal */
+.agenda__encabezado,
+.agenda__horas,
+.agenda__fondo {
+  display: none;
+}
+
+.agenda__panel[hidden] {
+  display: none;
+}
+
+/* Sin JS se ven todas las especialidades, una debajo de otra */
+.agenda:not(.agenda--js) .agenda__panel + .agenda__panel {
+  margin-top: var(--stack-md);
+}
+
+/* Leyenda de profesionales */
+.agenda__profesionales {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 12px;
+  font-family: var(--fuente-subtitulo);
+  font-size: calc(var(--fs-agenda) - var(--fs-ajuste-horarios));
+}
+
+.agenda__profesional {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.agenda__profesional::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: var(--borde-boton) solid var(--familia-oscuro);
+  border-radius: var(--radio-full);
+  background: var(--turno-fondo);
+}
+
+.agenda__dias {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agenda__dia {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+  border-top: var(--borde-boton) solid var(--linea-suave);
+}
+
+.agenda__dia-nombre {
+  margin: 0;
+  padding-top: 7px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-aclaracion);
+}
+
+.agenda__turnos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.agenda__turno {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 12px;
+  border-radius: var(--radio-sm);
+  background: var(--turno-fondo);
+  color: var(--turno-texto);
+  font-size: var(--fs-aclaracion);
+  line-height: 1.3;
+}
+
+.agenda__turno-horario {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Tablet y escritorio (desde 768px): agenda semanal
+   ========================================================================== */
+@media (min-width: 768px) {
+
+  /* --- Grilla: columna de horas + Lun a Vie. Filas: desplegable, leyenda,
+         días y 24 medias horas de 9 a 21 h (las filas las ubica agenda.js).
+         Las filas crecen solo si un turno necesita más alto para mostrar el
+         nombre completo, y un día con turnos superpuestos se ensancha
+         (--columnas, agenda.js). --- */
+  .agenda--js .agenda__calendario {
+    display: grid;
+    grid-template-columns: 40px var(--columnas, repeat(5, minmax(0, 1fr)));
+    grid-template-rows: auto 32px repeat(24, minmax(12px, auto));
+    padding: 20px 20px 24px 12px;
+  }
+
+  /* Fila 1: leyenda a la izquierda y desplegable pegado al borde derecho */
+  .agenda--js .agenda__control {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    align-self: center;
+    margin: 0 0 16px auto;
+  }
+
+  .agenda--js .agenda__encabezado {
+    display: grid;
+    grid-row: 2;
+    grid-column: 2 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+    font-family: var(--fuente-subtitulo);
+    font-weight: 500;
+    font-size: calc(var(--fs-agenda) - var(--fs-ajuste-horarios));
+    text-align: center;
+  }
+
+  /* Cada hora ocupa sus dos medias horas (agenda.js le da --fila): el número
+     queda centrado sobre la línea superior y la línea cruza los cinco días */
+  .agenda--js .agenda__horas {
+    display: contents;
+  }
+
+  .agenda--js .agenda__horas span {
+    position: relative;
+    grid-row: var(--fila) / span 2;
+    grid-column: 1 / -1;
+    padding-right: calc(100% - 30px);   /* el número ocupa los primeros 30px */
+    font-family: var(--fuente-subtitulo);
+    font-size: calc(var(--fs-agenda) - var(--fs-ajuste-horarios));
+    line-height: 1;
+    text-align: right;
+    transform: translateY(-0.5em);
+  }
+
+  .agenda--js .agenda__horas span::after {
+    content: '';
+    position: absolute;
+    top: 0.5em;
+    left: 40px;
+    right: 0;
+    height: 1px;
+    background: var(--linea-suave);
+  }
+
+  /* 21 h: va sobre la línea inferior de la grilla */
+  .agenda--js .agenda__horas span:last-child {
+    grid-row: -2;
+    align-self: end;
+    transform: translateY(0.5em);
+  }
+
+  .agenda--js .agenda__horas span:last-child::after {
+    display: none;
+  }
+
+  /* Líneas de cada día (una caja por día) */
+  .agenda--js .agenda__fondo {
+    display: grid;
+    grid-row: 3 / -1;
+    grid-column: 2 / -1;
+    grid-template-columns: subgrid;
+    border-right: var(--borde-boton) solid var(--linea-suave);
+    border-bottom: var(--borde-boton) solid var(--linea-suave);
+  }
+
+  .agenda--js .agenda__fondo span {
+    border-left: var(--borde-boton) solid var(--linea-suave);
+  }
+
+  /* El panel y sus listas no generan cajas: los turnos son celdas de la grilla */
+  .agenda--js .agenda__panel,
+  .agenda--js .agenda__dias,
+  .agenda--js .agenda__dia,
+  .agenda--js .agenda__turnos {
+    display: contents;
+  }
+
+  .agenda--js .agenda__panel[hidden] {
+    display: none;
+  }
+
+  .agenda--js .agenda__profesionales {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    align-self: center;
+    margin: 0 0 16px 8px;
+    padding-right: calc(var(--ancho-desplegable) + 20px);   /* deja lugar al desplegable */
+  }
+
+  .agenda--js .agenda__dia-nombre {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Si dos turnos se superponen en el mismo día, van lado a lado.
+     Los textos no se recortan: si no entran, siguen en el renglón de abajo. */
+  .agenda--js .agenda__turno {
+    position: relative;
+    z-index: 1;
+    grid-row: var(--fila-inicio) / var(--fila-fin);
+    grid-column: var(--columna);
+    gap: 0;
+    width: calc(100% / var(--carriles, 1) - 4px);
+    min-width: 0;
+    margin: 2px 0 2px calc(100% * var(--carril, 0) / var(--carriles, 1) + 2px);
+    padding: 5px 8px;
+    font-size: calc(var(--fs-agenda) - var(--fs-ajuste-horarios) + 1px);   /* nombres y horas: 1px más que el resto de la grilla */
+    line-height: 1.15;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .agenda--js .agenda__turno-nombre {
+    order: -1;
+    font-family: var(--fuente-subtitulo);
+    font-weight: 500;
+  }
+
+  .agenda--js .agenda__turno-horario {
+    font-family: var(--fuente-texto);
+    font-weight: 400;
+    white-space: normal;
+  }
+}

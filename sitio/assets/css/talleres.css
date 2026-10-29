@@ -1,0 +1,228 @@
+/* ==========================================================================
+   TALLERES DISPONIBLES — carrusel de cards de talleres (Novedades)
+   Pasa solo y, al tocar las flechas, se frena y avanza card por card
+   (carrusel.js). Cada card: foto enmarcada, nombre, descripción, a quién
+   está dirigido y "Reservar mi lugar". Etiquetas opcionales: una pill
+   inclinada sobre la card (ej. "Octubre rosa") y una franja "Nuevo"
+   cruzando la foto.
+   Cards visibles: 1 y un poco en móvil, 2 en tablet, 3 y 4 en escritorio.
+   ========================================================================== */
+
+.talleres {
+  padding-bottom: var(--seccion-padding);
+}
+
+/* ---------- Carrusel ----------
+   Móvil: a todo el ancho de la pantalla, sin corte a los costados (como la
+   galería). Desde tablet: dentro de la retícula. */
+.talleres .carrusel {
+  --talleres-separacion: 16px;
+  container-type: inline-size;
+  margin-top: -24px;
+  margin-inline: calc(-1 * var(--margen));
+  padding-top: 24px;   /* lugar para la pill que sobresale de la card */
+  padding-inline: var(--margen);
+}
+
+.talleres .carrusel__pista {
+  gap: var(--talleres-separacion);
+}
+
+/* ---------- Card de taller (familia de color con modificador) ---------- */
+.card-taller {
+  --familia-pastel: var(--verde-pastel);
+  --familia-medio: var(--verde);
+  --familia-oscuro: var(--verde-oscuro);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: 85cqi;
+  padding: 12px;
+  border-radius: var(--radio);
+  background: var(--familia-pastel);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.card-taller--rosa {
+  --familia-pastel: var(--rosa-pastel);
+  --familia-medio: var(--rosa);
+  --familia-oscuro: var(--rosa-oscuro);
+}
+
+.card-taller--naranja {
+  --familia-pastel: var(--naranja-pastel);
+  --familia-medio: var(--naranja);
+  --familia-oscuro: var(--naranja-oscuro);
+}
+
+.card-taller--amarillo {
+  --familia-pastel: var(--amarillo-pastel);
+  --familia-medio: var(--amarillo);
+  --familia-oscuro: var(--amarillo-oscuro);
+}
+
+/* ---------- Foto enmarcada ---------- */
+.card-taller__media {
+  position: relative;
+  aspect-ratio: 243 / 200;   /* medida del wireframe */
+  overflow: hidden;
+  border-radius: var(--radio-sm);
+  background: var(--blanco);
+}
+
+.card-taller__imagen {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Sin foto todavía: ícono del taller sobre blanco */
+.card-taller__media--sin-foto {
+  display: grid;
+  place-items: center;
+  color: var(--familia-medio);
+}
+
+.card-taller__media--sin-foto .icono {
+  width: 34%;
+  height: auto;
+}
+
+/* ---------- Texto ---------- */
+.card-taller__cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 8px 8px;
+}
+
+.card-taller__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-subtitulo);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--familia-oscuro);
+}
+
+.card-taller__texto {
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-card-texto);
+  line-height: 1.45;
+  color: var(--negro);
+}
+
+/* A quién está dirigido */
+.card-taller__publico {
+  align-self: flex-start;
+  margin-top: auto;   /* abajo de todo, alineado entre cards */
+  color: var(--familia-oscuro);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-antetitulo);
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-taller__boton {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* ---------- Pill inclinada sobre la card (ej. "Octubre rosa") ---------- */
+.card-taller__etiqueta {
+  position: absolute;
+  top: -14px;
+  right: 16px;
+  z-index: 1;
+  padding: 5px 14px;
+  border-radius: var(--radio-full);
+  background: var(--rosa);
+  color: var(--blanco);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-antetitulo);
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(8deg);
+}
+
+/* ---------- Franja "Nuevo" cruzando la foto ---------- */
+.card-taller__nuevo {
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  width: 120%;
+  overflow: hidden;
+  padding: 6px 0;
+  background: var(--familia-pastel);
+  color: var(--familia-oscuro);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-bajada);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translateY(-50%) rotate(-14deg);
+  pointer-events: none;
+}
+
+/* El texto se repite dos veces para que la franja corra en loop sin cortes */
+.card-taller__nuevo-pista {
+  display: inline-flex;
+  animation: card-taller-nuevo 9s linear infinite;
+}
+
+.card-taller__nuevo-pista span {
+  padding-right: 0.6em;
+}
+
+@keyframes card-taller-nuevo {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-taller__nuevo-pista {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Tablet: 2 cards · Escritorio: 3 cards · Pantallas grandes: 4 cards
+   ========================================================================== */
+@media (min-width: 700px) {
+  .talleres .carrusel {
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .card-taller {
+    width: calc((100cqi - var(--talleres-separacion)) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .talleres .carrusel {
+    --talleres-separacion: clamp(24px, 2.6vw, 50px);
+  }
+
+  .card-taller {
+    width: calc((100cqi - 2 * var(--talleres-separacion)) / 3);
+  }
+}
+
+@media (min-width: 1440px) {
+  .card-taller {
+    width: calc((100cqi - 3 * var(--talleres-separacion)) / 4);
+  }
+}

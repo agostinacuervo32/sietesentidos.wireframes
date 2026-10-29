@@ -1,0 +1,332 @@
+/* ==========================================================================
+   NOTA — página de cada entrada de Novedades (plantilla de post)
+   Estructura de diario con el estilo del sitio: banda de categoría, migas de
+   pan, volanta, título, fecha y botón de idioma entre filetes; debajo, la foto
+   de portada a la izquierda y el texto a la derecha, separados por una línea
+   como las columnas de un diario. Las fotos llevan su epígrafe.
+   Categorías: .nota--noticia (banda verde) y .nota--opinion (banda rosa).
+   ========================================================================== */
+
+.nota {
+  padding-bottom: var(--seccion-padding);
+}
+
+/* ---------- Banda de categoría (ancho completo) ---------- */
+.nota__banda {
+  margin-top: 24px;
+  background-color: var(--verde);
+  color: var(--blanco);
+}
+
+.nota--opinion .nota__banda {
+  background-color: var(--rosa);
+}
+
+.nota__banda-texto {
+  display: block;
+  padding-block: 10px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-antetitulo);
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Migas de pan (izquierda) y volver (derecha), en una línea ---------- */
+.nota__navegacion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.migas {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.migas__lista {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-aclaracion);
+  line-height: 1.3;
+}
+
+.migas__item {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+/* El título de la nota ocupa lo que queda y se corta con "…" */
+.migas__item:last-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.migas__item + .migas__item::before {
+  content: '›';
+  content: '›' / '';   /* el separador no se lee */
+  margin-inline: 8px;
+  color: var(--rosa);
+}
+
+/* Área táctil de 44px sin agrandar el texto */
+.migas__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--verde);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--duracion-corta) var(--ease);
+}
+
+@media (hover: hover) {
+  .migas__link:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+.migas__actual {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Volver a Novedades: link de texto subrayado ---------- */
+.nota__volver {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-family: var(--fuente-subtitulo);
+  font-size: var(--fs-aclaracion);
+  color: var(--verde);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color var(--duracion-corta) var(--ease);
+}
+
+.nota__volver .icono {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--duracion-corta) var(--ease);
+}
+
+@media (hover: hover) {
+  .nota__volver:hover {
+    color: var(--rosa);
+  }
+
+  .nota__volver:hover .icono {
+    transform: translateX(-3px);
+  }
+}
+
+/* ---------- Encabezado: volanta, título, fecha e idioma entre filetes ---------- */
+.nota__encabezado {
+  margin-top: 8px;
+  padding-block: var(--stack-md) var(--stack-sm);
+  border-top: var(--borde-linea) solid var(--verde);
+  border-bottom: 1px solid var(--linea-suave);
+}
+
+.nota__volanta {
+  margin-bottom: 12px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-antetitulo);
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rosa);
+}
+
+.nota__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--verde);
+}
+
+.nota__datos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: var(--stack-md);
+}
+
+.nota__fecha {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-aclaracion);
+}
+
+/* ---------- Firma (solo notas de opinión): foto, nombre, especialidad y fecha ---------- */
+.nota__firma {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nota__firma-foto {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radio-full);
+  object-fit: cover;
+  object-position: 50% 25%;
+}
+
+.nota__firma-texto {
+  display: grid;
+  gap: 2px;
+}
+
+.nota__firma-nombre {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-texto);
+  line-height: 1.2;
+  color: var(--verde);
+}
+
+.nota__firma-cargo {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-aclaracion);
+  line-height: 1.3;
+  color: var(--rosa);
+}
+
+.nota__idioma {
+  gap: 8px;
+}
+
+.nota__idioma .icono {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- Cuerpo: portada a la izquierda, texto a la derecha ---------- */
+.nota__cuerpo {
+  display: grid;
+  gap: var(--stack-md);
+  margin-top: var(--stack-md);
+}
+
+.nota__texto {
+  display: flow-root;   /* contiene la foto flotante */
+  max-width: 65ch;
+}
+
+.nota__texto p + p,
+.nota__texto .nota__figura + p {
+  margin-top: 1em;
+}
+
+/* ---------- Fotos con epígrafe ---------- */
+.nota__imagen {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radio);
+}
+
+.nota__epigrafe {
+  margin-top: 10px;
+  padding-left: 12px;
+  border-left: var(--borde-linea) solid var(--rosa);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--fs-aclaracion);
+  line-height: 1.4;
+}
+
+.nota__figura--texto {
+  margin-block: var(--stack-md);
+}
+
+/* ---------- Pie: palabras clave del idioma en que se lee la nota ---------- */
+.nota__pie {
+  margin-top: var(--stack-lg);
+  padding-top: var(--stack-md);
+  border-top: 1px solid var(--linea-suave);
+}
+
+.nota__claves-titulo {
+  margin-bottom: 12px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-antetitulo);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rosa);
+}
+
+/* Lista corrida, separada por puntos medios, sin fondo */
+.nota__claves-lista {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-aclaracion);
+  line-height: 1.4;
+}
+
+/* El punto va pegado al final de cada palabra: así no empieza una línea con "·" */
+.nota__clave:not(:last-child)::after {
+  content: '·';
+  content: '·' / '';
+  margin-inline: 10px;
+  color: var(--rosa);
+}
+
+/* ---------- Tablet: la foto del texto flota a la derecha ---------- */
+@media (min-width: 768px) {
+  .nota__banda {
+    margin-top: 32px;
+  }
+
+  .nota__figura--texto {
+    float: right;
+    width: 42%;
+    margin: 6px 0 var(--stack-sm) var(--stack-md);
+  }
+}
+
+/* ---------- Escritorio: dos columnas separadas por una línea ---------- */
+@media (min-width: 1024px) {
+  .nota__cuerpo {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 0;
+    align-items: start;
+  }
+
+  /* La portada queda fija mientras se lee el texto */
+  .nota__figura--portada {
+    position: sticky;
+    top: calc(var(--header-top-fijo) + var(--header-alto) + 24px);
+    padding-right: clamp(32px, 3vw, 64px);
+  }
+
+  .nota__texto {
+    min-height: 100%;
+    padding-left: clamp(32px, 3vw, 64px);
+    border-left: 1px solid var(--linea-suave);
+  }
+}

@@ -1,0 +1,64 @@
+/* ==========================================================================
+   CÓMO TRABAJAMOS + AGENDA (Apoyo escolar)
+   Móvil: se apilan "Cómo trabajamos" (acordeón de paneles vertical) y
+   "Agenda" (lista por día), cada uno con su antetítulo, y debajo los botones.
+   Desde 1200px: dos columnas, acordeón horizontal | agenda semanal.
+   Componentes: acordeon-paneles.css y agenda.css.
+   ========================================================================== */
+
+.como-trabajamos {
+  padding-bottom: var(--seccion-padding);
+}
+
+.como-trabajamos__contenedor {
+  display: grid;
+  gap: var(--stack-md);
+}
+
+/* Antetítulos de cada bloque: Cómo trabajamos y Agenda */
+.como-trabajamos__antetitulo {
+  margin: 0 0 var(--antetitulo-separacion);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-antetitulo);
+  line-height: var(--antetitulo-interlineado);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.como-trabajamos__botones {
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Escritorio (desde 1200px)
+   ========================================================================== */
+@media (min-width: 1200px) {
+
+  .como-trabajamos__contenedor {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--stack-lg) 32px;
+  }
+
+  /* Los dos bloques miden lo mismo: el acordeón se estira hasta el alto de
+     la agenda (560px como mínimo para que entren el texto y la foto) */
+  .como-trabajamos__bloque {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Con 4 paneles, los cerrados son más angostos que en el Inicio */
+  .como-trabajamos__bloque .acordeon-paneles {
+    --panel-cerrado: 12cqw;
+    flex: 1;
+    min-height: 560px;
+  }
+
+  .como-trabajamos__bloque .agenda {
+    flex: 1;
+  }
+
+  .como-trabajamos__botones {
+    grid-column: 1 / -1;
+  }
+}

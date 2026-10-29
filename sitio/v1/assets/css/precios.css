@@ -1,0 +1,241 @@
+/* ==========================================================================
+   PRECIOS Y FORMAS DE PAGO (Apoyo escolar)
+   Cinco cards con la misma estructura (card-plan), todas del mismo alto y
+   con el botón abajo: Inicial y primaria, Secundario, Inglés, Plan mensual
+   y Apoyo escolar y especialidad. Las destacadas llevan una etiqueta girada
+   en la esquina. Debajo, las notas: qué incluye y que los servicios son
+   arancelados.
+   Móvil: apiladas. Desde 768px: de a dos, centradas. Desde 1440px: cinco.
+   En Especialidades se suma una card a lo ancho (card-plan--ancha).
+   ========================================================================== */
+
+.precios {
+  padding-bottom: var(--seccion-padding);
+}
+
+/* ---------- Encabezado ---------- */
+.precios__encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.precios__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+  text-wrap: balance;
+}
+
+.precios__bajada {
+  max-width: 30em;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-bajada);
+  line-height: 1.35;
+  color: var(--negro);
+}
+
+/* ---------- Grilla ---------- */
+.precios__grilla {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;   /* deja lugar a la etiqueta de las destacadas */
+  margin-top: var(--stack-md);
+}
+
+.precios__grilla .card-plan {
+  flex: 1 1 100%;
+}
+
+/* ---------- Card de plan ---------- */
+/* --card-sobre-medio: texto sobre el tono medio (la etiqueta) */
+.card-plan--verde    { --card-fondo: var(--verde-pastel);    --card-medio: var(--verde);    --card-texto: var(--verde-oscuro);    --card-sobre-medio: var(--blanco); }
+.card-plan--rosa     { --card-fondo: var(--rosa-pastel);     --card-medio: var(--rosa);     --card-texto: var(--rosa-oscuro);     --card-sobre-medio: var(--blanco); }
+.card-plan--amarillo { --card-fondo: var(--amarillo-pastel); --card-medio: var(--amarillo); --card-texto: var(--amarillo-oscuro); --card-sobre-medio: var(--negro); }
+.card-plan--naranja  { --card-fondo: var(--naranja-pastel);  --card-medio: var(--naranja);  --card-texto: var(--naranja-oscuro);  --card-sobre-medio: var(--negro); }
+
+/* El tamaño de los títulos y montos se ajusta al ancho de la card (cqi),
+   así "Inicial y primaria" entra en un renglón en cualquier pantalla */
+.card-plan {
+  --card-letra: min(var(--fs-subtitulo), 11cqi);
+
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 36px 24px 28px;
+  border-radius: var(--radio);
+  background: var(--card-fondo);
+  color: var(--card-texto);
+  text-align: center;
+  transition: background-color var(--duracion-corta) var(--ease);
+}
+
+/* Hover: el relleno sube un tono dentro de su familia */
+@media (hover: hover) {
+  .card-plan:hover {
+    background: color-mix(in srgb, var(--card-fondo) 82%, var(--card-medio));
+  }
+}
+
+.card-plan__titulo {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--card-letra);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* En la grilla, los títulos reservan dos líneas: así los precios y los
+   textos quedan a la misma altura en todas las cards */
+.precios__grilla .card-plan__titulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(2 * 1.2em);
+}
+
+/* Monto arriba de "por hora" */
+.card-plan__precio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-plan__monto {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--card-letra);
+  line-height: 1.2;
+}
+
+.card-plan__unidad {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-bajada);
+  line-height: 1.35;
+}
+
+.card-plan__detalle {
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-card-texto);
+  line-height: 1.45;
+}
+
+.card-plan__precio,
+.card-plan__detalle {
+  margin-bottom: 16px;
+}
+
+/* El botón queda siempre abajo, alineado entre las cards */
+.card-plan__boton {
+  margin-top: auto;
+}
+
+/* Etiqueta de las destacadas: girada en la esquina superior derecha, con el
+   tono medio de la familia y en mayúsculas, para no confundirse con un
+   botón (los botones son pills verdes con texto en minúscula) */
+.card-plan__etiqueta {
+  position: absolute;
+  top: 0;
+  right: -6px;
+  padding: 5px 14px 4px;
+  border-radius: var(--radio-full);
+  background: var(--card-medio);
+  color: var(--card-sobre-medio);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translateY(-45%) rotate(8deg);
+}
+
+/* ---------- Notas ---------- */
+.precios__notas {
+  display: grid;
+  gap: 4px;
+  margin-top: var(--stack-md);
+  font-size: var(--fs-aclaracion);
+  line-height: 1.4;
+  text-align: center;
+  color: var(--negro);
+}
+
+/* ==========================================================================
+   Tablet (desde 768px): de a dos por fila, centradas
+   ========================================================================== */
+@media (min-width: 768px) {
+
+  .precios__grilla {
+    --precios-gap: clamp(16px, 2.29vw, 44px);
+    gap: 36px var(--precios-gap);
+    margin-top: 48px;
+  }
+
+  .precios__grilla .card-plan {
+    flex: 0 1 calc((100% - var(--precios-gap)) / 2);
+  }
+
+  .card-plan {
+    padding: 44px 28px 32px;
+  }
+
+  /* Card a lo ancho (Servicios adicionales en Especialidades): ocupa toda
+     la fila, debajo de las demás */
+  .precios__grilla .card-plan--ancha {
+    flex: 1 1 100%;
+  }
+
+  .card-plan--ancha .card-plan__detalle {
+    max-width: 30em;
+  }
+}
+
+/* ==========================================================================
+   Escritorio (desde 1440px): las cinco en fila
+   ========================================================================== */
+@media (min-width: 1440px) {
+
+  .precios__grilla {
+    --precios-gap: clamp(12px, 1.1vw, 20px);
+  }
+
+  .precios__grilla .card-plan {
+    flex: 1 1 0;
+    padding: 36px 16px 32px;
+  }
+
+  /* La card a lo ancho pone su contenido en una sola línea */
+  .precios__grilla .card-plan--ancha {
+    flex-basis: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: clamp(24px, 3vw, 56px);
+    padding: 28px 32px;
+  }
+
+  .precios__grilla .card-plan--ancha .card-plan__titulo {
+    min-height: 0;
+  }
+
+  .card-plan--ancha .card-plan__precio,
+  .card-plan--ancha .card-plan__detalle {
+    margin-bottom: 0;
+  }
+
+  .card-plan--ancha .card-plan__boton {
+    margin-top: 0;
+  }
+}

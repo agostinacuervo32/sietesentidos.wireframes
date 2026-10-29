@@ -1,0 +1,138 @@
+/* ==========================================================================
+   GALERÍA — mosaico de fotos en loop infinito (Novedades)
+   Medidas del wireframe en unidades (--galeria-u): separación 22, filas de
+   88 y 136 (alto total 246) y anchos 130, 172, 194 y 236. Encajan entre sí
+   (130 + 22 + 236 = 172 + 22 + 194), así que el mosaico no deja huecos y
+   cada bloque de cuatro columnas empalma con el siguiente en el loop.
+   El movimiento y las flechas son los del carrusel (carrusel.js).
+   Al tocar una foto se abre en un visor de 70vh como máximo (galeria.js).
+   ========================================================================== */
+
+.galeria {
+  /* 1 unidad del wireframe: 1,1px en móvil (393px) → 1,9px en escritorio (1920px) */
+  --galeria-u: clamp(1.1px, 0.894px + 0.0524vw, 1.9px);
+  --galeria-separacion: calc(22 * var(--galeria-u));
+  padding-bottom: var(--seccion-padding);
+  scroll-margin-top: calc(var(--header-top-fijo) + var(--header-alto) + 16px);   /* que el menú fijo no tape el título */
+}
+
+/* El título con las flechas al lado es .carrusel-encabezado (carrusel.css) */
+
+/* ---------- Carrusel a todo el ancho de la pantalla ---------- */
+.galeria .carrusel {
+  padding-inline: var(--margen);
+}
+
+.galeria .carrusel__pista {
+  gap: var(--galeria-separacion);
+}
+
+/* ---------- Columnas del mosaico ---------- */
+.galeria__columna,
+.galeria__fila {
+  display: flex;
+  gap: var(--galeria-separacion);
+  flex: none;
+}
+
+.galeria__columna {
+  flex-direction: column;
+}
+
+/* ---------- Foto (botón que abre el visor) ---------- */
+.galeria__foto {
+  display: block;
+  flex: none;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio);
+  background: var(--verde-pastel);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.galeria__foto img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform var(--duracion-larga) var(--ease);
+}
+
+@media (hover: hover) {
+  .galeria__foto:hover img {
+    transform: scale(1.04);
+  }
+}
+
+.galeria__foto:focus-visible {
+  outline: 3px solid var(--verde);
+  outline-offset: 3px;
+}
+
+/* Tamaños del wireframe (ancho × alto, en unidades) */
+.galeria__foto--chica      { width: calc(130 * var(--galeria-u)); height: calc(88 * var(--galeria-u)); }
+.galeria__foto--cuadrada   { width: calc(130 * var(--galeria-u)); height: calc(136 * var(--galeria-u)); }
+.galeria__foto--mediana    { width: calc(172 * var(--galeria-u)); height: calc(136 * var(--galeria-u)); }
+.galeria__foto--ancha      { width: calc(194 * var(--galeria-u)); height: calc(88 * var(--galeria-u)); }
+.galeria__foto--apaisada   { width: calc(194 * var(--galeria-u)); height: calc(136 * var(--galeria-u)); }
+.galeria__foto--vertical   { width: calc(194 * var(--galeria-u)); height: calc(246 * var(--galeria-u)); }
+.galeria__foto--panoramica { width: calc(236 * var(--galeria-u)); height: calc(88 * var(--galeria-u)); }
+
+/* Recortes: las fotos verticales en cajas bajas se centran en las personas */
+.galeria__foto--recorte-bajo img { object-position: 50% 62%; }
+
+/* ==========================================================================
+   VISOR — la foto ampliada en un recuadro, 70vh de alto como máximo
+   ========================================================================== */
+.galeria-visor {
+  max-width: calc(100vw - 2 * var(--margen));
+  max-height: calc(100vh - 2 * var(--margen));
+  margin: auto;
+  padding: 12px;
+  overflow: visible;
+  border: 0;
+  border-radius: var(--radio);
+  background: var(--blanco);
+}
+
+.galeria-visor::backdrop {
+  background: color-mix(in srgb, var(--negro) 75%, transparent);
+}
+
+.galeria-visor__imagen {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 2 * var(--margen) - 24px);
+  max-height: 70vh;
+  border-radius: var(--radio-sm);
+}
+
+/* La X usa el botón circular de botones.css */
+.galeria-visor__cerrar {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+.galeria-visor[open] {
+  animation: galeria-visor-entrada var(--duracion-corta) var(--ease);
+}
+
+@keyframes galeria-visor-entrada {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galeria-visor[open] {
+    animation: none;
+  }
+
+  .galeria__foto img {
+    transition: none;
+  }
+}

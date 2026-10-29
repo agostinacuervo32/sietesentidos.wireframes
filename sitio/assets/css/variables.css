@@ -1,0 +1,143 @@
+/* ==========================================================================
+   VARIABLES — Sistema visual de Siete Sentidos (fuente: .docs/style.md)
+   Único lugar donde se definen colores, tipografías, radios y espaciados.
+   ========================================================================== */
+
+:root {
+  /* ---------- Paleta de marca ---------- */
+  --rosa-oscuro: #3A2220;
+  --rosa: #955450;
+  --rosa-pastel: #F2BFBA;
+  --verde-oscuro: #1F3328;
+  --verde: #355241;
+  --verde-pastel: #BCE0C7;
+  --naranja-oscuro: #3D2312;
+  --naranja: #F08A4B;
+  --naranja-pastel: #FFD4B0;
+  --amarillo-oscuro: #3A2C0C;
+  --amarillo: #F5C84C;
+  --amarillo-pastel: #FFF0B8;
+  --negro: #2B2522;            /* nunca #000000 */
+  --blanco: #FFFFFF;
+  --gris: color-mix(in srgb, var(--negro) 14%, var(--blanco));   /* fondo de la card "Próximamente" de Noticias */
+  --linea-suave: color-mix(in srgb, var(--negro) 12%, transparent);   /* líneas de la grilla de la agenda */
+
+  /* ---------- Roles ---------- */
+  --color-principal: var(--verde);
+  --color-secundario: var(--rosa);
+  --color-contraste: var(--negro);
+  --color-fondo: var(--blanco);
+  --color-texto: var(--negro);
+
+  /* ---------- Degradados (solo entre pasteles) ---------- */
+  --degradado-abrazo: linear-gradient(135deg, var(--rosa-pastel) 0%, var(--naranja-pastel) 100%);
+  --degradado-calma: linear-gradient(135deg, var(--verde-pastel) 0%, var(--amarillo-pastel) 100%);
+  --degradado-sol: linear-gradient(135deg, var(--naranja-pastel) 0%, var(--amarillo-pastel) 100%);
+
+  /* ---------- Tipografías ---------- */
+  --fuente-titulo: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fuente-subtitulo: 'Lexend', system-ui, sans-serif;
+  --fuente-texto: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+
+  /* ---------- Tamaños (móvil 393px → escritorio 1920px) ---------- */
+  --fs-h1: clamp(35px, 31.1px + 0.98vw, 50px);
+  --fs-h2: clamp(30px, 26.1px + 0.98vw, 45px);
+  --fs-h2-lateral: clamp(30px, 22.3px + 1.96vw, 60px);
+  --fs-subtitulo: clamp(24px, 21.9px + 0.52vw, 32px);
+  --fs-card-titulo: 20px;   /* títulos de las cards de "Por qué elegir Siete Sentidos" */
+  --fs-noticia-titulo: clamp(18px, 6.8cqi, 26px);   /* títulos de las cards de Noticias: sigue el ancho de la card (cqi) para no pasar de dos renglones */
+  --fs-bajada: clamp(16px, 15.2px + 0.2vw, 19px);
+  --fs-texto-grande: clamp(16px, 15px + 0.26vw, 20px);   /* hero y cards de Apoyo escolar / Especialidades */
+  --fs-texto: clamp(16px, 15.2px + 0.2vw, 19px);
+  --fs-card-texto: var(--fs-texto);   /* texto de cards y acordeones (15px en escritorio) */
+  --fs-resena: var(--fs-texto);   /* texto de las reseñas (19px en escritorio) */
+  --fs-aclaracion: clamp(14px, 13.5px + 0.13vw, 16px);
+  --fs-boton: clamp(16px, 15.5px + 0.13vw, 18px);
+  --fs-menu: 18px;
+  --fs-antetitulo: 14px;
+  --fs-integrante-nombre: clamp(16px, 13.4px + 0.65vw, 26px);   /* nombre en las cards del equipo (Nosotros) */
+  --fs-integrante-cargo: clamp(12px, 11.2px + 0.2vw, 15px);     /* cargo en mayúsculas debajo del nombre */
+  --fs-agenda: clamp(13px, 10.5px + 0.2vw, 14px);   /* textos dentro de la grilla de la agenda */
+  --fs-ajuste-horarios: 0px;   /* en escritorio, agenda y FAQ van 2px más chicas */
+
+  /* ---------- Radios ---------- */
+  --radio-sm: 12px;
+  --radio: 20px;
+  --radio-lg: 32px;
+  --radio-full: 9999px;
+
+  /* ---------- Bordes ---------- */
+  --borde-boton: 1px;
+  --borde-linea: 2px;
+
+  /* ---------- Botones ---------- */
+  --boton-alto: 39px;
+  --boton-padding: 9px 21px 9px 22px;
+  --ancho-desplegable: 230px;   /* desplegable de especialidad de la agenda */
+
+  /* ---------- Horarios ---------- */
+  --antetitulo-interlineado: 1.2;
+  --antetitulo-separacion: 12px;   /* entre el antetítulo y su bloque */
+  --mapa-alto: 250px;   /* alto fijo del mapa (escritorio) */
+
+  /* ---------- Retícula ---------- */
+  --contenido: 1600px;
+  --margen: 18px;
+
+  /* ---------- Espaciados ---------- */
+  --unidad: 8px;
+  --seccion-padding: 64px;
+  --stack-sm: 16px;
+  --stack-md: 32px;
+  --stack-lg: 60px;
+  --header-top: 23px;          /* separación del menú arriba de todo (hero) */
+  --header-top-fijo: 20px;     /* separación al hacer scroll */
+  --header-alto: 55px;
+
+  /* ---------- Formularios ---------- */
+  --campo-alto: 48px;          /* área táctil de 44px como mínimo */
+  --campo-padding: 20px;       /* separación del texto con el borde izquierdo */
+  --mensaje-alto: 136px;       /* alto del campo Mensaje */
+
+  /* ---------- Formas ---------- */
+  /* "Apretada" arriba y abajo: los bordes se curvan hacia adentro
+     (foto del equipo y franja de fondo del contacto) */
+  --mascara-apretada: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0Q50 12 100 0V100Q50 88 0 100Z'/%3E%3C/svg%3E");
+
+  /* ---------- Movimiento ---------- */
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --ease-rebote: cubic-bezier(.3, 1.4, .4, 1);
+  --duracion-corta: 250ms;
+  --duracion-larga: 450ms;
+
+  /* ---------- Cursor (triángulo de boton-blob-triangulo.html) ---------- */
+  --cursor-claro: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M2 2 L19 8.5 L8.5 19 Z' fill='%23355241' stroke='%23355241' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, default;
+  --cursor-oscuro: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M2 2 L19 8.5 L8.5 19 Z' fill='%23F2BFBA' stroke='%23F2BFBA' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, default;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --margen: clamp(18px, 8.333vw, 160px);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --boton-alto: 42px;
+    --seccion-padding: 120px;
+  }
+}
+
+/* El menú pasa a escritorio recién a 1200px: con menos ancho los 5 links,
+   el logo y el botón no entran en una sola línea. */
+@media (min-width: 1200px) {
+  :root {
+    --header-top: 51px;
+    --header-alto: 93px;
+    --fs-ajuste-horarios: 2px;
+    --fs-card-texto: 15px;
+    --fs-resena: 19px;   /* texto de las reseñas */
+    --campo-alto: 54px;
+    --mensaje-alto: 168px;
+  }
+}

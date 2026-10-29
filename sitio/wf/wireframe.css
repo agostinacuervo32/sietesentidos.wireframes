@@ -1,0 +1,85 @@
+/* Capa WIREFRAME: pasa el sitio a escala de grises sin tocar el layout */
+@font-face{font-family:'Bricolage Grotesque';font-weight:200 800;src:url(/wf/fonts/brico-var.woff2) format('woff2')}
+@font-face{font-family:'Lexend';font-weight:300;src:url(/wf/fonts/lexend-latin-300-normal.woff2)}
+@font-face{font-family:'Lexend';font-weight:400;src:url(/wf/fonts/lexend-latin-400-normal.woff2)}
+@font-face{font-family:'Lexend';font-weight:500;src:url(/wf/fonts/lexend-latin-500-normal.woff2)}
+@font-face{font-family:'Atkinson Hyperlegible Next';font-weight:400;src:url(/wf/fonts/atkinson-hyperlegible-next-latin-400-normal.woff2)}
+@font-face{font-family:'Atkinson Hyperlegible Next';font-weight:600;src:url(/wf/fonts/atkinson-hyperlegible-next-latin-600-normal.woff2)}
+@font-face{font-family:'Atkinson Hyperlegible Next';font-weight:300;font-style:italic;src:url(/wf/fonts/atkinson-hyperlegible-next-latin-300-italic.woff2)}
+
+:root{
+  --wf-fondo:#d9d9d9; --wf-ph:#b3b3b3; --wf-2:#9b9b9b; --wf-3:#878787; --wf-4:#707070;
+  --rosa-oscuro:#000; --verde-oscuro:#000; --naranja-oscuro:#000; --amarillo-oscuro:#000;
+  --rosa:#000; --verde:#000; --naranja:#000; --amarillo:#000;
+  --rosa-pastel:var(--wf-ph); --verde-pastel:var(--wf-2); --naranja-pastel:var(--wf-3); --amarillo-pastel:#c6c6c6;
+  --negro:#000; --blanco:var(--wf-fondo);
+  --gris:var(--wf-ph);
+  --degradado-abrazo:var(--wf-ph); --degradado-calma:var(--wf-ph); --degradado-sol:var(--wf-ph);
+  --wf-x:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='100' y2='100' stroke='%23ececec' stroke-width='1.3' vector-effect='non-scaling-stroke'/%3E%3Cline x1='100' y1='0' x2='0' y2='100' stroke='%23ececec' stroke-width='1.3' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+}
+html,body{background:var(--wf-fondo)!important;cursor:default!important}
+*,*::before,*::after{animation:none!important;transition:none!important;cursor:default!important}
+::selection{background:#999}
+
+/* Botones negros con texto blanco, como en los wireframes */
+.boton--primario,.boton--relleno,.btn--primario,[class*="boton--lleno"],[class*="boton--solido"]{color:#fff!important}
+
+/* Imagen → recuadro gris con cruz blanca */
+img.wf-ph,.wf-ph-bg{
+  background:var(--wf-ph) var(--wf-x) center/100% 100% no-repeat!important;
+  object-position:-99999px -99999px!important;   /* oculta la foto, deja el recuadro */
+}
+.wf-ph-bg > *{visibility:hidden!important}
+.wf-ph-bg{border-radius:var(--radio,20px)}
+img.wf-logo{object-fit:contain!important;object-position:center!important;background:none!important}
+
+/* ---------- Ajustes por componente ---------- */
+/* Apoyo escolar / Especialidades: sin oscurecer, títulos en negro */
+.card-servicio__media::after{background:transparent!important}
+.card-servicio__nombre{color:#000!important}
+/* Por qué elegir: todas las cards iguales, ilustración = recuadro */
+.card-beneficio{--card-fondo:var(--wf-ph)!important;--card-texto:#000!important}
+.card-beneficio__ilustracion{background:var(--wf-ph) var(--wf-x) center/100% 100% no-repeat!important}
+.card-beneficio__ilustracion img{visibility:hidden!important}
+/* Lo que nos guía: Valores / Visión / Misión en tres grises */
+.acordeon-paneles__panel{--panel-texto:#000!important}
+.acordeon-paneles__panel:nth-child(1){--panel-fondo:var(--wf-ph)!important}
+.acordeon-paneles__panel:nth-child(2){--panel-fondo:var(--wf-2)!important}
+.acordeon-paneles__panel:nth-child(3){--panel-fondo:var(--wf-3)!important}
+/* Preguntas frecuentes: todas del mismo gris */
+.acordeon,.acordeon *{--familia-pastel:var(--wf-ph)!important;--familia-medio:var(--wf-2)!important}
+/* Contacto: tarjeta sin borde */
+.contacto__tarjeta{border:0!important}
+/* Footer: franja de derechos */
+.footer__legal{background:var(--wf-4)!important;color:#c4c4c4!important}
+.footer__legal *{color:#c4c4c4!important}
+/* Emojis y colores sueltos a gris */
+.opiniones blockquote,.opiniones p{filter:grayscale(1)}
+/* Novedades: cards sin degradé oscuro, texto negro */
+.card-noticia::before{background:transparent!important}
+.card-noticia__contenido,.card-noticia__contenido *{color:#000!important}
+/* Notas: banda de categoría en gris */
+.nota__banda{background-color:var(--wf-4)!important;color:#fff!important}
+
+/* ---------- Correcciones ronda 2 ---------- */
+/* Menú: sin efecto de borde ni link activo */
+.menu__link::after{display:none!important}
+.menu__link,.menu__link:hover,.menu__link[aria-current]{color:#000!important;letter-spacing:normal!important;text-decoration:none!important}
+.blob-cursor,.blob-fantasma{display:none!important}
+/* Botones oscuros: texto claro */
+.btn--oscuro,.btn--primario,.card-noticia__boton{color:#fff!important}
+.card-noticia__contenido .card-noticia__boton{color:#fff!important;background:#000!important;border-color:#000!important}
+/* Equipo: solo foto y texto, sin recuadro detrás */
+.card-integrante__datos{background:transparent!important;padding-inline:16px!important}
+.card-integrante__nombre,.card-integrante__cargo{color:#000!important}
+/* Etiquetas inclinadas: fondo oscuro con letra clara, franja clara con letra oscura */
+.card-taller__etiqueta,[class*="__etiqueta"]{background:var(--wf-4)!important;color:#fff!important;visibility:visible!important;z-index:3!important}
+.card-taller__nuevo{background:#ececec!important;color:#000!important;visibility:visible!important;z-index:2!important}
+.card-taller__nuevo *{color:#000!important;visibility:visible!important}
+/* Agenda en mobile: más corta */
+@media (max-width:1199px){.agenda.wf-ph-bg{height:240px!important;min-height:0!important;overflow:hidden!important}}
+/* Talleres: todas las cards del mismo gris */
+.card-taller,.card-taller[class*="card-taller--"]{--familia-pastel:var(--wf-2)!important;--familia-medio:#000!important;--familia-oscuro:#000!important}
+/* Talleres sin foto: también recuadro con cruz */
+.card-taller__media--sin-foto{background:var(--wf-ph) var(--wf-x) center/100% 100% no-repeat!important}
+.card-taller__media--sin-foto > svg{visibility:hidden!important}

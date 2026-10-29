@@ -1,0 +1,91 @@
+/* ==========================================================================
+   ACOMPAÑAMIENTO INTEGRAL (Especialidades)
+   Encabezado centrado; debajo, el acordeón de paneles con las seis
+   especialidades y la agenda de las especialidades, y el botón a WhatsApp.
+   Móvil: se apilan el acordeón vertical y la agenda (lista por día).
+   Desde 1200px: dos columnas de la misma altura, acordeón horizontal | agenda.
+   Componentes: acordeon-paneles.css y agenda.css.
+   ========================================================================== */
+
+.integral {
+  padding-bottom: var(--seccion-padding);
+}
+
+/* ---------- Encabezado ---------- */
+.integral__encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.integral__antetitulo {
+  margin-bottom: calc(var(--antetitulo-separacion) - 6px);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-antetitulo);
+  line-height: var(--antetitulo-interlineado);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rosa);
+}
+
+.integral__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+  text-wrap: balance;
+}
+
+.integral__bajada {
+  max-width: 34em;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-bajada);
+  line-height: 1.35;
+  color: var(--negro);
+}
+
+/* ---------- Acordeón + agenda ---------- */
+.integral__contenido {
+  display: grid;
+  gap: var(--stack-sm);
+  margin-top: var(--stack-md);
+}
+
+.integral__botones {
+  justify-content: center;
+  margin-top: var(--stack-md);
+}
+
+/* ==========================================================================
+   Escritorio (desde 1200px)
+   ========================================================================== */
+@media (min-width: 1200px) {
+
+  .integral__contenido {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  /* Con 6 paneles en media página, los cerrados van angostos (como en
+     Cómo trabajamos de Apoyo escolar). El alto lo marca la agenda y el
+     acordeón se estira hasta ese alto. */
+  .integral__contenido .acordeon-paneles {
+    --panel-cerrado: 10cqw;
+    min-height: 320px;
+  }
+
+  .integral__agenda {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .integral__agenda .agenda {
+    flex: 1;
+  }
+}

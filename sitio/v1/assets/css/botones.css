@@ -1,0 +1,193 @@
+/* ==========================================================================
+   BOTONES — estilo del wireframe de Figma, colores de la paleta
+   y animación de boton-blob-triangulo.html (ver assets/js/boton-blob.js)
+   ========================================================================== */
+
+.btn {
+  /* Variante por defecto: principal sobre fondo claro */
+  --btn-fondo: var(--verde);
+  --btn-borde: var(--verde);
+  --btn-texto: var(--blanco);
+  --btn-blob: var(--rosa-pastel);     /* color del blob y del estado presionado */
+  --btn-inverso: var(--verde);        /* texto y borde dentro del blob */
+  --btn-fs: var(--fs-boton);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--boton-alto);
+  padding: var(--boton-padding);
+  border: var(--borde-boton) solid var(--btn-borde);
+  border-radius: var(--radio-full);
+  background-color: var(--btn-fondo);
+  color: var(--btn-texto);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--btn-fs);
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    transform .4s var(--ease),
+    font-size .45s var(--ease-rebote),
+    background-color var(--duracion-corta) ease,
+    border-color var(--duracion-corta) ease,
+    color var(--duracion-corta) ease;
+}
+
+/* En móvil el alto visual es de 39px, pero el área táctil llega a 44px */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: -3px 0;
+}
+
+/* ---------- Variantes ---------- */
+.btn--secundario {
+  --btn-fondo: transparent;
+  --btn-borde: var(--verde);
+  --btn-texto: var(--verde);
+  --btn-blob: var(--verde);
+  --btn-inverso: var(--rosa-pastel);
+}
+
+.btn--oscuro {
+  --btn-fondo: var(--rosa-pastel);
+  --btn-borde: var(--rosa-pastel);
+  --btn-texto: var(--verde);
+  --btn-blob: var(--amarillo-pastel);
+  --btn-inverso: var(--verde);
+}
+
+.btn--secundario.btn--oscuro {
+  --btn-fondo: transparent;
+  --btn-borde: var(--rosa-pastel);
+  --btn-texto: var(--rosa-pastel);
+  --btn-blob: var(--rosa-pastel);
+  --btn-inverso: var(--verde);
+}
+
+/* ---------- Botón circular con ícono (flechas, cerrar) ---------- */
+.boton-circular {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: var(--borde-boton) solid var(--verde);
+  border-radius: var(--radio-full);
+  background-color: var(--blanco);
+  color: var(--verde);
+  transition:
+    background-color var(--duracion-corta) var(--ease),
+    transform var(--duracion-corta) var(--ease-rebote);
+}
+
+.boton-circular .icono {
+  width: 22px;
+  height: 22px;
+}
+
+@media (hover: hover) {
+  .boton-circular:hover {
+    background-color: var(--verde-pastel);
+  }
+}
+
+.boton-circular:active {
+  transform: scale(.9);
+}
+
+.boton-circular:disabled {
+  opacity: .4;
+  pointer-events: none;
+}
+
+/* ---------- Estados ---------- */
+
+/* Hover con blob: el texto crece 3pt (la clase la pone boton-blob.js) */
+.btn.is-abrazado {
+  font-size: calc(var(--btn-fs) + 3pt);
+}
+
+/* Presionado / foco por teclado: el botón se rellena con el color del blob */
+.btn.is-presionado,
+.btn:focus-visible {
+  background-color: var(--btn-blob);
+  border-color: var(--btn-inverso);
+  color: var(--btn-inverso);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--btn-borde);
+  outline-offset: 3px;
+}
+
+/* Táctiles: sin blob, el tap muestra el estado presionado */
+@media (hover: none) {
+  .btn:active {
+    background-color: var(--btn-blob);
+    border-color: var(--btn-inverso);
+    color: var(--btn-inverso);
+  }
+}
+
+/* Movimiento reducido: sin blob ni imán, el hover pasa al estado presionado */
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .btn:hover {
+    background-color: var(--btn-blob);
+    border-color: var(--btn-inverso);
+    color: var(--btn-inverso);
+  }
+}
+
+/* Con el blob activo, el cursor sigue visible sobre el botón:
+   verde sobre los blobs pastel, rosa pastel sobre el blob verde */
+.blob-activo .btn {
+  cursor: var(--cursor-claro);
+}
+
+.blob-activo .btn--secundario:not(.btn--oscuro) {
+  cursor: var(--cursor-oscuro);
+}
+
+/* ---------- Capas del blob (las crea boton-blob.js) ---------- */
+.blob-cursor {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.blob-fantasma {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 91;
+  clip-path: inset(100%);
+}
+
+.blob-fantasma .btn {
+  position: absolute;
+  margin: 0;
+  background: transparent;
+  border-color: var(--btn-inverso);
+  color: var(--btn-inverso);
+  transition: none;
+}
+
+/* ---------- Grupo de botones ---------- */
+.grupo-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+@media (min-width: 1024px) {
+  .grupo-botones {
+    gap: 16px 20px;
+  }
+}

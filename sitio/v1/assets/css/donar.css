@@ -1,0 +1,181 @@
+/* ==========================================================================
+   POR QUÉ DONAR (Doná) — beneficio en Ganancias + pasos para donar
+   Móvil: el texto, los botones y, debajo, la card de pasos.
+   Desde 1200px: dos columnas, texto | card de pasos (medidas del wireframe:
+   860 × 772 de 1600 con 48 de separación).
+   La card de pasos es una forma cerrada ("abrazar"): relleno pastel, sin borde.
+   ========================================================================== */
+
+.por-que-donar {
+  padding-top: var(--stack-lg);   /* más aire debajo del hero */
+  padding-bottom: var(--seccion-padding);
+}
+
+.por-que-donar__contenedor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--stack-md);
+}
+
+/* ---------- Texto ---------- */
+.por-que-donar__encabezado {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.por-que-donar__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+  text-wrap: balance;
+}
+
+.por-que-donar__antetitulo {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-antetitulo);
+  line-height: var(--antetitulo-interlineado);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rosa);
+}
+
+.por-que-donar__parrafos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+  max-width: 36em;
+  margin-top: var(--stack-md);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-texto);
+  line-height: 1.45;
+  color: var(--negro);
+}
+
+.por-que-donar__botones {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: var(--stack-md);
+}
+
+/* ---------- Card de pasos ---------- */
+.card-pasos {
+  --paso-numero: 36px;
+  padding: 24px 20px 28px;
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--verde-pastel) 45%, var(--blanco));
+  color: var(--verde-oscuro);
+}
+
+.card-pasos__titulo {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-antetitulo);
+  line-height: var(--antetitulo-interlineado);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-pasos__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+
+/* El número va en un círculo a la izquierda, centrado con el bloque de texto */
+.card-pasos__paso {
+  display: grid;
+  grid-template-columns: var(--paso-numero) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-texto);
+  line-height: 1.4;
+  counter-increment: paso;
+}
+
+.card-pasos__paso::before {
+  content: counter(paso);
+  display: grid;
+  place-items: center;
+  width: var(--paso-numero);
+  aspect-ratio: 1;
+  border-radius: var(--radio-full);
+  background: var(--verde);
+  color: var(--blanco);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1;
+  animation: paso-blob 4s ease-in-out infinite alternate;
+}
+
+/* Blob: una piedrita redondeada que cambia de forma lentamente, nunca un círculo
+   (en cada lado los dos radios suman 100 % para que el contorno no tenga tramos rectos) */
+@keyframes paso-blob {
+  0%   { border-radius: 65% 35% 60% 40% / 60% 38% 62% 40%; }
+  25%  { border-radius: 38% 62% 40% 60% / 40% 65% 35% 60%; }
+  50%  { border-radius: 62% 38% 68% 32% / 35% 60% 40% 65%; }
+  75%  { border-radius: 35% 65% 32% 68% / 65% 32% 68% 35%; }
+  100% { border-radius: 68% 32% 62% 38% / 62% 35% 65% 38%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-pasos__paso::before {
+    animation: none;
+  }
+}
+
+/* ---------- Tablet: los botones en fila ---------- */
+@media (min-width: 768px) {
+  .por-que-donar__botones {
+    flex-direction: row;
+  }
+
+  .card-pasos {
+    padding: 32px 36px 40px;
+  }
+}
+
+/* ---------- Escritorio ---------- */
+@media (min-width: 1200px) {
+  .por-que-donar__contenedor {
+    grid-template-columns: minmax(0, 860fr) minmax(0, 772fr);
+    align-items: start;
+    gap: 48px;
+  }
+
+  .por-que-donar__parrafos {
+    margin-top: 40px;
+  }
+
+  .por-que-donar__botones {
+    margin-top: 40px;
+  }
+
+  .card-pasos {
+    --paso-numero: 46px;
+    padding: 36px 56px 56px 50px;
+  }
+
+  .card-pasos__lista {
+    gap: 44px;
+    margin-top: 36px;
+  }
+
+  .card-pasos__paso {
+    gap: 24px;
+  }
+
+  .card-pasos__paso::before {
+    font-size: 22px;
+  }
+}

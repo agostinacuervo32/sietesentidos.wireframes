@@ -1,0 +1,375 @@
+/* ==========================================================================
+   HERO — texto + composición de fotos y globos de diálogo
+   ========================================================================== */
+
+.hero {
+  padding-top: 40px;
+  padding-bottom: var(--seccion-padding);
+  overflow-x: clip;
+}
+
+.hero__contenedor {
+  display: grid;
+  gap: 48px;
+}
+
+/* ---------- Texto ---------- */
+.hero__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h1);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--verde);
+}
+
+/* Móvil: "Bajo un mismo techo:" va como antetítulo en mayúsculas */
+.hero__antetitulo {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-antetitulo);
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rosa);
+}
+
+.hero__titulo-principal {
+  display: block;
+}
+
+.hero__titulo-principal::first-letter {
+  text-transform: uppercase;
+}
+
+.hero__bajada {
+  max-width: 31em;
+  margin-top: 20px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-texto-grande);
+  line-height: 1.35;
+  color: var(--negro);
+}
+
+.hero__botones {
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.solo-escritorio {
+  display: none;
+}
+
+/* ---------- Composición (medidas del wireframe: 860 × 583px) ---------- */
+.hero__composicion {
+  position: relative;
+  width: 125vw;
+  margin-inline: calc(50% - 62.5vw);   /* se recorta en los bordes laterales */
+  aspect-ratio: 860 / 583;
+}
+
+.hero__pieza {
+  position: absolute;
+}
+
+.hero__foto {
+  overflow: hidden;
+  border-radius: 14px;
+  background-color: var(--verde-pastel);
+}
+
+.hero__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duracion-larga) var(--ease);
+}
+
+.hero__foto:hover img {
+  transform: scale(1.03);
+}
+
+/* Posiciones en % del recuadro de 860 × 583px */
+.hero__pieza--1 { left: 28.49%; top: 7.03%;  width: 37.79%; height: 20.24%; }
+.hero__pieza--2 { left: 71.05%; top: 0;      width: 28.95%; height: 66.38%; }
+.hero__pieza--3 { left: 0;      top: 33.79%; width: 34.07%; height: 11.84%; }
+.hero__pieza--4 { left: 38.14%; top: 34.31%; width: 28.84%; height: 48.54%; }
+.hero__pieza--5 { left: 3.95%;  top: 49.74%; width: 28.95%; height: 50.26%; }
+.hero__pieza--6 { left: 38.14%; top: 88.16%; width: 28.84%; height: 11.84%; }
+.hero__pieza--7 { left: 71.05%; top: 73.41%; width: 28.95%; height: 26.59%; }
+
+.hero__foto--lectura img { object-position: 50% 45%; }
+.hero__foto--docente img { object-position: 30% 50%; }
+.hero__foto--estudiante img { object-position: 50% 40%; }
+.hero__foto--especialidad img { object-position: 50% 60%; }
+
+/* ---------- Globos de diálogo (formas cerradas planas) ---------- */
+.hero__globo {
+  --globo-color: var(--rosa-pastel);
+  --cola: clamp(10px, 1.4vw, 22px);
+
+  border-radius: var(--radio);
+  background-color: var(--globo-color);
+  animation: globo-respira 5s var(--ease) infinite alternate;
+}
+
+/* Cola: la forma sale de cola.svg (con el pico hacia arriba) usada como
+   máscara, así toma el color de cada globo. Se mete un poco dentro del
+   globo para que la base no deje huecos contra el borde redondeado. */
+.hero__globo::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--cola) * -0.85);
+  width: calc(var(--cola) * 1.26);
+  height: var(--cola);
+  background-color: var(--globo-color);
+  -webkit-mask: url('/assets/imagenes/ilustraciones/cola.svg') center / 100% 100% no-repeat;
+  mask: url('/assets/imagenes/ilustraciones/cola.svg') center / 100% 100% no-repeat;
+}
+
+/* Globo izquierdo: cola arriba a la derecha */
+.hero__globo--rosa::after {
+  right: 12%;
+}
+
+/* Globo inferior: cola arriba a la izquierda */
+.hero__globo--verde {
+  --globo-color: var(--verde-pastel);
+  animation-delay: -2.5s;
+}
+
+.hero__globo--verde::after {
+  left: 12%;
+}
+
+@keyframes globo-respira {
+  from { transform: scale(1); }
+  to   { transform: scale(1.04); }
+}
+
+/* ---------- Páginas internas: video + fotos y un globo ----------
+   Medidas de la referencia: recuadro de 607 × 443px. A la izquierda, dos
+   fotos apiladas y debajo el globo (con la cola hacia la derecha); a la
+   derecha, el video arriba y una foto ancha abajo. */
+.hero__composicion--pagina {
+  aspect-ratio: 607 / 443;
+}
+
+.hero__composicion--pagina .hero__pieza--1 { left: 36.74%; top: 9.26%;  width: 63.26%; height: 56.43%; }
+.hero__composicion--pagina .hero__pieza--2 { left: 0.99%;  top: 0;      width: 30.97%; height: 29.12%; }
+.hero__composicion--pagina .hero__pieza--3 { left: 0;      top: 88.94%; width: 36.9%;  height: 11.06%; }
+.hero__composicion--pagina .hero__pieza--4 { left: 0.66%;  top: 36.57%; width: 31.63%; height: 45.82%; }
+.hero__composicion--pagina .hero__pieza--5 { left: 42.01%; top: 72.69%; width: 57.99%; height: 27.31%; }
+
+.hero__foto--estudiantes img { object-position: 40% 50%; }
+.hero__foto--mesa img { object-position: 50% 40%; }
+.hero__foto--mesa-juegos img { object-position: 50% 35%; }
+.hero__foto--cocina img { object-position: 40% 40%; }
+.hero__foto--abrazo img { object-position: 50% 45%; }
+
+/* Especialidades: recuadro de 768 × 593px. A la izquierda, una foto chica
+   arriba, una más grande abajo y el globo (con la cola hacia el video); a la
+   derecha, el video vertical, que es la pieza más grande. */
+.hero__composicion--especialidades {
+  aspect-ratio: 768 / 593;
+}
+
+.hero__composicion--especialidades .hero__pieza--1 { left: 50%;    top: 9.44%;  width: 50%;    height: 90.56%; }
+.hero__composicion--especialidades .hero__pieza--2 { left: 11.33%; top: 0;      width: 33.07%; height: 29.34%; }
+.hero__composicion--especialidades .hero__pieza--3 { left: 16.67%; top: 88.87%; width: 29.17%; height: 11.13%; }
+.hero__composicion--especialidades .hero__pieza--4 { left: 0;      top: 36.76%; width: 44.01%; height: 45.53%; }
+
+.hero__foto--encastre img { object-position: 50% 65%; }
+.hero__foto--consultorio img { object-position: 50% 70%; }
+
+/* Globo con la cola a la derecha, mirando hacia la foto de al lado: la
+   misma cola girada 90° sobre el centro de su base */
+.hero__globo--lateral::after {
+  top: calc(50% - var(--cola));
+  left: calc(100% - var(--cola) * 0.88);
+  transform-origin: 50% 100%;
+  transform: rotate(90deg);
+}
+
+.hero__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 848 / 478;
+  border-radius: 14px;
+  background-color: var(--verde-pastel);
+  animation: hero-foto .8s var(--ease) .15s both;
+}
+
+/* Dentro de la composición, el alto lo da la pieza */
+.hero__composicion .hero__media {
+  aspect-ratio: auto;
+}
+
+/* El video es decorativo: no tiene controles ni se puede interactuar con él */
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Botones de las páginas internas: los textos son largos y, al crecer con el
+   hover, pasaban de una fila a dos y movían el diseño. Si la columna del
+   texto no tiene lugar para los dos botones crecidos, van siempre apilados. */
+.hero--pagina .hero__texto {
+  container-type: inline-size;
+}
+
+.hero--pagina .hero__botones {
+  flex-direction: column;
+  align-items: center;
+}
+
+@container (min-width: 600px) {
+  .hero--pagina .hero__botones {
+    flex-direction: row;
+  }
+}
+
+/* ---------- Entrada ---------- */
+.hero__texto > * {
+  animation: hero-entrada .7s var(--ease) both;
+}
+
+.hero__texto > :nth-child(2) { animation-delay: .1s; }
+.hero__texto > :nth-child(3) { animation-delay: .2s; }
+
+.hero__foto {
+  animation: hero-foto .8s var(--ease) both;
+}
+
+.hero__pieza--1 { animation-delay: .15s; }
+.hero__pieza--2 { animation-delay: .25s; }
+.hero__pieza--4 { animation-delay: .35s; }
+.hero__pieza--5 { animation-delay: .45s; }
+.hero__pieza--7 { animation-delay: .55s; }
+
+@keyframes hero-entrada {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-foto {
+  from { opacity: 0; transform: translateY(20px) scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Escritorio ---------- */
+@media (min-width: 1024px) {
+  .hero {
+    padding-top: 91px;
+  }
+
+  .hero__contenedor {
+    grid-template-columns: minmax(0, 740fr) minmax(0, 860fr);
+    align-items: center;
+    gap: 0;
+  }
+
+  .hero__texto {
+    align-items: flex-start;
+    padding-right: 40px;
+    text-align: left;
+  }
+
+  .hero__titulo {
+    max-width: 10.5em;
+  }
+
+  /* Escritorio (Inicio): el H1 es una sola frase en tres líneas.
+     En las páginas internas (.hero--pagina) el antetítulo se mantiene. */
+  .hero:not(.hero--pagina) .hero__antetitulo {
+    margin-bottom: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: none;
+    color: inherit;
+  }
+
+  .hero__titulo-principal::first-letter {
+    text-transform: none;
+  }
+
+  .hero__bajada {
+    margin-top: 32px;
+  }
+
+  .hero__botones {
+    justify-content: flex-start;
+    margin-top: 24px;
+  }
+
+  .solo-escritorio {
+    display: inline;
+  }
+
+  .solo-movil {
+    display: none;
+  }
+
+  .hero__composicion {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .hero__foto {
+    border-radius: var(--radio);
+  }
+
+  .hero__media {
+    border-radius: var(--radio);
+  }
+
+  /* En escritorio la cola de los globos va 3px más chica */
+  .hero__globo {
+    --cola: calc(clamp(10px, 1.4vw, 22px) - 3px);
+  }
+
+  .hero--pagina .hero__botones {
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Hero centrado (Novedades): solo texto, sin composición de fotos.
+   Las cards de talleres van pegadas debajo, como en el wireframe.
+   ========================================================================== */
+.hero--centrado {
+  padding-bottom: var(--stack-lg);
+}
+
+@media (min-width: 1024px) {
+  .hero--centrado .hero__contenedor {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero--centrado .hero__texto {
+    align-items: center;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .hero--centrado .hero__titulo {
+    max-width: 20em;
+  }
+
+  .hero--centrado .hero__botones {
+    justify-content: center;
+    align-items: center;
+  }
+}

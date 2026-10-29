@@ -1,0 +1,131 @@
+/* ==========================================================================
+   REDES — invitación a seguir a la fundación en Instagram (Novedades)
+   Texto a la izquierda y, a la derecha, una tarjeta tipo perfil con el logo
+   en un círculo blanco y el botón al perfil. Solo links: sin feed embebido.
+   Móvil: el texto arriba y la tarjeta debajo.
+   ========================================================================== */
+
+.redes {
+  padding-bottom: 0;   /* la tarjeta queda apoyada sobre el footer */
+}
+
+.redes__contenedor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);   /* nunca más ancha que la pantalla */
+  justify-items: center;
+  gap: var(--stack-md);
+}
+
+/* ---------- Texto ---------- */
+.redes__texto {
+  width: 100%;
+  max-width: 26em;
+  text-align: center;
+}
+
+.redes__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+}
+
+.redes__bajada {
+  margin-top: var(--stack-sm);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-bajada);
+  line-height: 1.4;
+  color: var(--negro);
+}
+
+/* ---------- Tarjeta de perfil ---------- */
+.perfil-red {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.67vw, 32px);
+  width: 100%;
+  max-width: 616px;
+  padding: clamp(16px, 2.08vw, 40px) clamp(16px, 2.6vw, 50px);
+  border-radius: var(--radio) var(--radio) 0 0;   /* abajo recto, como en el wireframe */
+  background: var(--verde-pastel);
+}
+
+/* Logo en un círculo blanco, como foto de perfil */
+.perfil-red__foto {
+  display: flex;
+  align-items: center;
+  flex: none;
+  --perfil-foto: clamp(64px, 18vw, 80px);   /* móvil: más chica para que la tarjeta entre en 320px */
+  width: var(--perfil-foto);
+  aspect-ratio: 1;
+  padding: calc(var(--perfil-foto) * 0.14);   /* margen del logo dentro del círculo */
+  border-radius: var(--radio-full);
+  background: var(--blanco);
+}
+
+.perfil-red__foto img {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+}
+
+.perfil-red__datos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.perfil-red__nombre {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-texto);
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--verde-oscuro);
+}
+
+.perfil-red__usuario {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: var(--fs-texto);
+  line-height: 1.3;
+  color: var(--negro);
+  overflow-wrap: anywhere;
+}
+
+.perfil-red__boton {
+  margin-top: 14px;
+}
+
+/* ==========================================================================
+   Escritorio: texto y tarjeta lado a lado, centrados
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .perfil-red__foto {
+    --perfil-foto: clamp(96px, 8.65vw, 166px);
+  }
+
+  .redes__contenedor {
+    grid-template-columns: auto minmax(0, 616px);
+    justify-content: center;
+    align-items: center;
+    column-gap: clamp(48px, 4.17vw, 80px);
+  }
+
+  .redes__titulo,
+  .perfil-red__nombre {
+    white-space: nowrap;
+  }
+
+  .redes__texto {
+    max-width: 22em;
+    text-align: left;
+  }
+}

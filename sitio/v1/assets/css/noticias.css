@@ -1,0 +1,254 @@
+/* ==========================================================================
+   NOTICIAS — grilla de entradas con orden y paginación (Novedades)
+   Cada card es la foto de la nota con el texto encima, sobre un degradado
+   oscuro para que se lea bien. Se muestran de a 6 (3 columnas × 2 filas en
+   escritorio); el orden y la paginación los maneja noticias.js.
+   Sin JS se ven todas las noticias, sin paginación.
+   ========================================================================== */
+
+.noticias {
+  padding-bottom: var(--seccion-padding);
+  scroll-margin-top: calc(var(--header-top-fijo) + var(--header-alto) + 16px);   /* que el menú fijo no tape el título */
+}
+
+/* ---------- Título + "Ordenar por" ---------- */
+.noticias__encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: var(--stack-md);
+}
+
+.noticias__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+}
+
+/* Pill con la etiqueta y el desplegable adentro, como en el wireframe */
+.noticias__orden {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding-left: 20px;
+  border: var(--borde-boton) solid var(--verde);
+  border-radius: var(--radio-full);
+  color: var(--verde);
+  font-family: var(--fuente-subtitulo);
+  font-size: var(--fs-aclaracion);
+  cursor: var(--cursor-claro);
+  transition: background-color var(--duracion-corta) var(--ease);
+}
+
+@media (hover: hover) {
+  .noticias__orden:hover {
+    background-color: var(--verde-pastel);
+  }
+}
+
+.noticias__orden:focus-within {
+  outline: 3px solid var(--verde);
+  outline-offset: 3px;
+}
+
+.noticias__desplegable {
+  appearance: none;
+  min-height: 42px;
+  padding: 0 44px 0 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  cursor: inherit;
+}
+
+.noticias__desplegable:focus-visible {
+  outline: none;   /* el foco se marca en la pill entera */
+}
+
+.noticias__desplegable option {
+  background: var(--blanco);
+  color: var(--negro);
+  font-weight: 400;
+}
+
+.noticias__chevron {
+  position: absolute;
+  right: 16px;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* ---------- Grilla ---------- */
+.noticias__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+
+/* ---------- Card de noticia ---------- */
+.card-noticia {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radio);
+  background: var(--verde-oscuro);
+  isolation: isolate;
+}
+
+.card-noticia[hidden] {
+  display: none;
+}
+
+.card-noticia__imagen {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transition: transform var(--duracion-larga) var(--ease);
+}
+
+/* Degradado oscuro de abajo hacia arriba para leer el texto en blanco */
+.card-noticia::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--negro) 88%, transparent) 0%,
+    color-mix(in srgb, var(--negro) 75%, transparent) 45%,
+    color-mix(in srgb, var(--negro) 25%, transparent) 75%,
+    transparent 100%
+  );
+}
+
+@media (hover: hover) {
+  .card-noticia:hover .card-noticia__imagen {
+    transform: scale(1.04);
+  }
+}
+
+.card-noticia__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: clamp(20px, 1.67vw, 32px);
+  color: var(--blanco);
+}
+
+.card-noticia__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: var(--fs-subtitulo);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.card-noticia__extracto {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-card-texto);
+  line-height: 1.45;
+}
+
+.card-noticia__boton {
+  margin-top: 12px;
+}
+
+/* ---------- Paginación ---------- */
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: var(--stack-md);
+}
+
+.paginacion[hidden] {
+  display: none;
+}
+
+.paginacion__numeros {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-items: center;
+  gap: 2px;
+}
+
+.paginacion__numero {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  height: 44px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--radio-full);
+  background: transparent;
+  color: var(--negro);
+  font-family: var(--fuente-subtitulo);
+  font-size: var(--fs-aclaracion);
+  transition: background-color var(--duracion-corta) var(--ease);
+}
+
+@media (hover: hover) {
+  .paginacion__numero:hover {
+    background-color: var(--verde-pastel);
+  }
+}
+
+.paginacion__numero[aria-current="page"] {
+  background-color: var(--verde);
+  color: var(--blanco);
+  font-weight: 500;
+}
+
+.paginacion__puntos {
+  min-width: 24px;
+  text-align: center;
+  color: var(--negro);
+}
+
+/* ==========================================================================
+   Tablet: 2 columnas · Escritorio: 3 columnas
+   ========================================================================== */
+@media (min-width: 700px) {
+  .noticias__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .noticias__lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-noticia__imagen {
+    transition: none;
+  }
+}

@@ -1,0 +1,149 @@
+/* ==========================================================================
+   DÍAS, HORARIOS Y DUDAS FRECUENTES — agenda + preguntas frecuentes + mapa
+   Móvil: se apilan Agenda (lista por día), Preguntas frecuentes y el botón
+   "Ver ubicación en el mapa". Desde 768px la agenda pasa a grilla semanal y
+   se muestra el mapa. Desde 1200px: dos columnas (agenda | FAQ + mapa).
+   ========================================================================== */
+
+.horarios {
+  padding-bottom: var(--seccion-padding);
+}
+
+.horarios__contenedor {
+  display: grid;
+  gap: var(--stack-md);
+}
+
+.horarios__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Antetítulos de cada bloque: Agenda, Preguntas frecuentes y Ubicación */
+.horarios__antetitulo {
+  margin: 0 0 var(--antetitulo-separacion);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-antetitulo);
+  line-height: var(--antetitulo-interlineado);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.horarios__lateral {
+  display: grid;
+  gap: var(--stack-md);
+}
+
+/* ==========================================================================
+   Ubicación (móvil: solo el botón)
+   ========================================================================== */
+.ubicacion {
+  display: flex;
+  flex-direction: column;
+}
+
+.ubicacion__boton {
+  align-self: center;
+}
+
+.ubicacion__mapa {
+  display: none;
+}
+
+/* ==========================================================================
+   Tablet y escritorio (desde 768px): mapa (la agenda semanal está en agenda.css)
+   ========================================================================== */
+@media (min-width: 768px) {
+
+  /* --- Mapa --- */
+  .ubicacion {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ubicacion__mapa {
+    display: block;
+    flex: 1;
+    min-height: 360px;
+    border-radius: var(--radio);
+    overflow: hidden;
+  }
+
+  .ubicacion__mapa iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    border: 0;
+  }
+
+  .ubicacion__boton {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Escritorio (desde 1200px): dos columnas de ~785px con 32px de separación
+   ========================================================================== */
+@media (min-width: 1200px) {
+
+  .horarios__contenedor {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);   /* más ancho para la agenda hasta 1600px */
+    gap: var(--stack-lg) 32px;
+  }
+
+  .horarios__titulo {
+    grid-column: 1 / -1;
+  }
+
+  .horarios__bloque--agenda,
+  .horarios__lateral {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .horarios__bloque--agenda .agenda {
+    flex: 1;
+  }
+
+  /* La agenda mide lo mismo que la columna derecha con las preguntas
+     cerradas: sus dos antetítulos + las preguntas (--acordeon-alto-cerrado,
+     acordeon.js) + el mapa de 250px. Al abrir una pregunta el mapa baja y
+     la agenda no cambia de tamaño. */
+  .horarios__contenedor {
+    --alto-columna: calc(
+      2 * (var(--fs-antetitulo) * var(--antetitulo-interlineado) + var(--antetitulo-separacion))
+      + var(--acordeon-alto-cerrado, 0px) + 24px + var(--mapa-alto)
+    );
+  }
+
+  .horarios__bloque--agenda {
+    align-self: start;
+    min-height: var(--alto-columna);
+  }
+
+  .horarios__lateral {
+    align-self: start;
+    gap: 24px;
+  }
+
+  .ubicacion__mapa {
+    flex: none;
+    height: var(--mapa-alto);
+    min-height: 0;
+  }
+}
+
+/* Desde 1600px, dos columnas iguales como en el wireframe (~785px + 32px) */
+@media (min-width: 1600px) {
+  .horarios__contenedor {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

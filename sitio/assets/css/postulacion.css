@@ -1,0 +1,49 @@
+/* ==========================================================================
+   POSTULACIÓN (Sumate) — variante de la tarjeta de Contacto
+   Usa el mismo marcado y las mismas clases que Contacto (contacto.css).
+   Sumate se diferencia del resto del sitio con otro color: la franja de
+   fondo va en naranja pastel en lugar de rosa pastel.
+   ========================================================================== */
+
+.contacto--sumate::before {
+  background: var(--naranja-pastel);
+}
+
+/* ==========================================================================
+   Agradecimiento: reemplaza al formulario cuando la postulación está completa
+   ========================================================================== */
+.postulacion-gracias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--stack-sm);
+  text-align: center;
+}
+
+.postulacion-gracias[hidden] {
+  display: none;
+}
+
+.postulacion-gracias:focus {
+  outline: none;
+}
+
+.postulacion-gracias__titulo {
+  font-family: var(--fuente-subtitulo);
+  font-size: var(--fs-subtitulo);
+  line-height: 1.2;
+  color: var(--verde);
+}
+
+.postulacion-gracias__texto {
+  max-width: 46ch;
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-texto);
+  line-height: 1.4;
+  color: var(--verde);
+}
+
+.postulacion-gracias__whatsapp {
+  gap: 8px;
+  margin-top: 8px;
+}

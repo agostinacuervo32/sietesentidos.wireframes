@@ -1,0 +1,231 @@
+/* ==========================================================================
+   HEADER — menú flotante tipo píldora (forma cerrada: "abrazar")
+   ========================================================================== */
+
+.header {
+  /* Relleno según la sección que pasa por debajo (lo actualiza menu.js):
+     rosa pastel sobre secciones blancas, blanco sobre secciones de color. */
+  --menu-fondo: var(--rosa-pastel);
+  --menu-hover: var(--blanco);
+
+  position: sticky;
+  top: max(var(--header-top-fijo), env(safe-area-inset-top));   /* al hacer scroll sube a 20px */
+  z-index: 50;
+  margin-top: var(--header-top);
+}
+
+.header[data-sobre="color"],
+.header[data-sobre="oscuro"] {
+  --menu-fondo: var(--blanco);
+  --menu-hover: var(--rosa-pastel);
+}
+
+.menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-alto);
+  padding: 8px 8px 8px 20px;
+  border-radius: var(--radio-full);
+  background-color: var(--blanco);
+  transition: background-color var(--duracion-larga) var(--ease);
+  border: var(--borde-boton) solid var(--verde);
+}
+
+/* ---------- Logo ---------- */
+.menu__logo {
+  display: block;
+  flex: none;
+  border-radius: var(--radio-sm);
+}
+
+.menu__logo img {
+  width: auto;
+  height: 39px;
+}
+
+/* ---------- Botón hamburguesa (móvil) ---------- */
+.menu__hamburguesa {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: var(--borde-boton) solid var(--verde);
+  border-radius: var(--radio-full);
+  color: var(--verde);
+  transition: background-color var(--duracion-corta) var(--ease);
+}
+
+/* Área táctil de 44px */
+.menu__hamburguesa::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+}
+
+.menu__hamburguesa:hover {
+  background-color: var(--menu-hover);
+}
+
+.menu__hamburguesa .icono {
+  width: 22px;
+  height: 22px;
+  transition: transform var(--duracion-larga) var(--ease-rebote);
+}
+
+.menu__icono-cerrar,
+.menu.is-abierto .menu__icono-abrir {
+  display: none;
+}
+
+.menu.is-abierto .menu__icono-cerrar {
+  display: block;
+  transform: rotate(90deg);
+}
+
+/* ---------- Panel desplegable (móvil) ---------- */
+.menu__navegacion {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  border-radius: var(--radio-lg);
+  background-color: var(--blanco);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-8px) scale(.98);
+  transform-origin: top center;
+  transition:
+    opacity var(--duracion-corta) var(--ease),
+    transform var(--duracion-larga) var(--ease),
+    visibility 0s linear var(--duracion-larga),
+    background-color var(--duracion-larga) var(--ease);
+}
+
+.menu.is-abierto .menu__navegacion {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duracion-corta) var(--ease),
+    transform var(--duracion-larga) var(--ease),
+    visibility 0s,
+    background-color var(--duracion-larga) var(--ease);
+}
+
+.menu__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  width: 100%;
+}
+
+/* ---------- Links ---------- */
+.menu__link {
+  display: inline-block;
+  padding: 10px;
+  border-radius: var(--radio-full);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-menu);
+  line-height: 1;
+  color: var(--negro);
+  transition: color var(--duracion-corta) var(--ease);
+}
+
+/* Hover: el texto del link pasa a rosa */
+.menu__link:hover {
+  color: var(--rosa);
+}
+
+/* Link activo: subrayado lineal de 2px (forma abierta) */
+.menu__link[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+/* ---------- Variante de todas las páginas: borde que se traza al hover ----------
+   El borde (igual al de "Contactate") se revela de izquierda a derecha:
+   la mitad superior y la inferior avanzan a la vez y se cierran a la derecha. */
+.menu--trazo .menu__link {
+  position: relative;
+  font-size: calc(var(--fs-menu) - 2px);
+  transition:
+    color var(--duracion-corta) var(--ease),
+    letter-spacing var(--duracion-corta) var(--ease);
+}
+
+/* Mientras se traza el borde, las letras se aprietan ("abrazo") y el botón,
+   que toma el ancho del texto, se achica con ellas */
+.menu--trazo .menu__link:hover,
+.menu--trazo .menu__link:focus-visible {
+  letter-spacing: -0.06em;
+  transition:
+    color var(--duracion-corta) var(--ease),
+    letter-spacing var(--duracion-larga) var(--ease);
+}
+
+.menu--trazo .menu__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--borde-boton) solid var(--verde);
+  border-radius: inherit;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--duracion-larga) var(--ease);
+  pointer-events: none;
+}
+
+.menu--trazo .menu__link:hover::after,
+.menu--trazo .menu__link:focus-visible::after,
+.menu--trazo .menu__link[aria-current="page"]::after {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Link activo: queda fijo en el estado final del hover, sin subrayado */
+.menu--trazo .menu__link[aria-current="page"] {
+  color: var(--rosa);
+  letter-spacing: -0.06em;
+  text-decoration: none;
+}
+
+/* ---------- Escritorio ---------- */
+@media (min-width: 1200px) {
+  .menu {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    padding: 16px 41px;
+  }
+
+  .menu__logo img {
+    height: 61px;
+  }
+
+  .menu__hamburguesa {
+    display: none;
+  }
+
+  .menu__navegacion {
+    display: contents;
+    visibility: visible;
+  }
+
+  .menu__links {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+  }
+
+  .menu__cta {
+    justify-self: end;
+  }
+}

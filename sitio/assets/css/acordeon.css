@@ -1,0 +1,142 @@
+/* ==========================================================================
+   ACORDEÓN — preguntas frecuentes (Inicio) y talleres (Novedades)
+   Una pregunta por vez (ver acordeon.js). Cada ítem toma su familia de
+   color con un modificador (acordeon__item--verde, --rosa, etc.).
+   ========================================================================== */
+
+/* ==========================================================================
+   Familia de color de cada ítem
+   (la agenda tiene sus estilos en agenda.css)
+   ========================================================================== */
+.acordeon__item--verde {
+  --familia-pastel: var(--verde-pastel);
+  --familia-medio: var(--verde);
+  --familia-oscuro: var(--verde-oscuro);
+}
+
+.acordeon__item--rosa {
+  --familia-pastel: var(--rosa-pastel);
+  --familia-medio: var(--rosa);
+  --familia-oscuro: var(--rosa-oscuro);
+}
+
+.acordeon__item--naranja {
+  --familia-pastel: var(--naranja-pastel);
+  --familia-medio: var(--naranja);
+  --familia-oscuro: var(--naranja-oscuro);
+}
+
+.acordeon__item--amarillo {
+  --familia-pastel: var(--amarillo-pastel);
+  --familia-medio: var(--amarillo);
+  --familia-oscuro: var(--amarillo-oscuro);
+}
+
+/* ==========================================================================
+   Acordeón
+   ========================================================================== */
+.acordeon {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.acordeon__encabezado {
+  margin: 0;
+  font: inherit;
+}
+
+.acordeon__pregunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 20px;
+  border-radius: var(--radio);
+  background: var(--familia-pastel);
+  color: var(--negro);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 300;
+  font-size: calc(var(--fs-bajada) - var(--fs-ajuste-horarios));
+  line-height: 1.3;
+  text-align: left;
+  transition:
+    background-color var(--duracion-corta) var(--ease),
+    color var(--duracion-corta) var(--ease);
+}
+
+.acordeon__pregunta:hover {
+  background: color-mix(in srgb, var(--familia-pastel) 82%, var(--familia-medio));
+}
+
+.acordeon__item.is-abierto .acordeon__pregunta {
+  color: var(--familia-oscuro);
+}
+
+.acordeon__chevron {
+  transition: transform var(--duracion-larga) var(--ease);
+}
+
+.acordeon__item.is-abierto .acordeon__chevron {
+  transform: rotate(180deg);
+}
+
+/* La respuesta se abre con grid-template-rows 0fr → 1fr */
+.acordeon__respuesta {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--duracion-larga) var(--ease),
+    visibility 0s linear var(--duracion-larga);
+}
+
+.acordeon__item.is-abierto .acordeon__respuesta {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--duracion-larga) var(--ease),
+    visibility 0s;
+}
+
+.acordeon__interior {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Bloque aparte, separado 3px de la pregunta */
+.acordeon__texto {
+  margin-top: 3px;
+  padding: 14px 20px 16px;
+  border-radius: var(--radio);
+  background: var(--familia-pastel);
+  font-size: var(--fs-card-texto);
+  line-height: 1.45;
+}
+
+/* Link dentro de una respuesta: forma abierta, subrayado lineal y flecha */
+.acordeon__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--familia-oscuro);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: calc(var(--fs-boton) - var(--fs-ajuste-horarios));   /* tamaño de los botones */
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.acordeon__flecha {
+  width: 20px;
+  height: 20px;
+  transition: transform var(--duracion-corta) var(--ease);
+}
+
+.acordeon__link:hover .acordeon__flecha {
+  transform: translateX(4px);
+}

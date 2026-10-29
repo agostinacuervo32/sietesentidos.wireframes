@@ -1,0 +1,89 @@
+/* ==========================================================================
+   CONTACTO — tarjeta con el formulario sobre una franja "apretada"
+   La franja rosa pastel va de borde a borde de la pantalla (no se frena en
+   los 1600px) y tiene los bordes superior e inferior curvados hacia adentro,
+   igual que la foto del equipo. La tarjeta verde pastel se apoya encima.
+   Al enviar, el formulario abre WhatsApp con un mensaje armado con lo que
+   se completó (ver formulario-whatsapp.js).
+   ========================================================================== */
+
+.contacto {
+  --franja-arriba: 26px;   /* distancia entre el borde de la tarjeta y la franja */
+  --franja-abajo: 32px;
+
+  position: relative;
+  isolation: isolate;
+  scroll-margin-top: calc(var(--header-top-fijo) + var(--header-alto) + 16px);
+}
+
+/* Franja de fondo a todo el ancho */
+.contacto::before {
+  content: '';
+  position: absolute;
+  top: var(--franja-arriba);
+  bottom: var(--franja-abajo);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background: var(--rosa-pastel);
+  -webkit-mask: var(--mascara-apretada) center / 100% 100% no-repeat;
+  mask: var(--mascara-apretada) center / 100% 100% no-repeat;
+}
+
+/* En móvil la tarjeta se separa más de los bordes para que se vea la franja */
+.contacto__contenedor {
+  padding-inline: calc(var(--margen) + 14px);
+}
+
+.contacto__tarjeta {
+  width: 100%;
+  max-width: 862px;
+  margin-inline: auto;
+  padding: 18px 18px 24px;
+  border: var(--borde-linea) solid var(--verde-oscuro);
+  border-radius: var(--radio-lg);
+  background: var(--verde-pastel);
+}
+
+.contacto__tarjeta .formulario {
+  --campo-entorno: var(--verde-pastel);
+}
+
+.contacto__titulo {
+  margin-bottom: 18px;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Desde 768px
+   ========================================================================== */
+@media (min-width: 768px) {
+  .contacto__contenedor {
+    padding-inline: var(--margen);
+  }
+
+  .contacto__tarjeta {
+    padding: 30px 40px 40px;
+  }
+
+  .contacto__titulo {
+    margin-bottom: var(--stack-md);
+  }
+}
+
+/* ==========================================================================
+   Escritorio (desde 1200px): la franja arranca a la altura de la tarjeta
+   y termina antes que ella
+   ========================================================================== */
+@media (min-width: 1200px) {
+  .contacto {
+    --franja-arriba: 0px;
+    --franja-abajo: 87px;
+  }
+}

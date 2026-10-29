@@ -1,0 +1,191 @@
+/* ==========================================================================
+   ACORDEÓN DE PANELES — siempre hay un panel abierto (ver acordeon-paneles.js)
+   Móvil: acordeón vertical. Escritorio: acordeón horizontal; los títulos
+   de los paneles cerrados van en vertical y giran al abrirse.
+   Sirve para cualquier cantidad de paneles: acordeon-paneles.js pasa la
+   cantidad en --paneles. Cada panel puede llevar una imagen debajo del texto.
+   Se usa en el Inicio (Lo que nos guía) y en Apoyo escolar (Cómo trabajamos).
+   ========================================================================== */
+
+.acordeon-paneles {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+
+.acordeon-paneles__panel--amarillo { --panel-fondo: var(--amarillo-pastel); --panel-texto: var(--amarillo-oscuro); }
+.acordeon-paneles__panel--naranja  { --panel-fondo: var(--naranja-pastel);  --panel-texto: var(--naranja-oscuro); }
+.acordeon-paneles__panel--rosa     { --panel-fondo: var(--rosa-pastel);     --panel-texto: var(--rosa-oscuro); }
+.acordeon-paneles__panel--verde    { --panel-fondo: var(--verde-pastel);    --panel-texto: var(--verde-oscuro); }
+
+.acordeon-paneles__panel {
+  position: relative;
+  background: var(--panel-fondo);
+  color: var(--panel-texto);
+}
+
+.acordeon-paneles__encabezado {
+  font: inherit;
+}
+
+.acordeon-paneles__boton {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  text-align: center;
+}
+
+.acordeon-paneles__panel.is-abierto .acordeon-paneles__boton {
+  cursor: default;
+}
+
+.acordeon-paneles__titulo {
+  display: inline-block;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-subtitulo);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* El contenido se abre con grid-template-rows 0fr → 1fr */
+.acordeon-paneles__contenido {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--duracion-larga) var(--ease),
+    visibility 0s linear var(--duracion-larga);
+}
+
+.acordeon-paneles__panel.is-abierto .acordeon-paneles__contenido {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--duracion-larga) var(--ease),
+    visibility 0s;
+}
+
+.acordeon-paneles__interior {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.acordeon-paneles__texto {
+  padding: 0 20px 22px;
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-card-texto);
+  line-height: 1.5;
+}
+
+/* Imagen opcional, debajo del texto */
+.acordeon-paneles__imagen {
+  margin: 0 20px 20px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radio-sm);
+  overflow: hidden;
+}
+
+.acordeon-paneles__imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   Escritorio (desde 1200px): acordeón horizontal
+   ========================================================================== */
+@media (min-width: 1200px) {
+
+  /* --panel-cerrado: ancho de cada panel cerrado.
+     El abierto ocupa el resto: 100% − (paneles − 1) × panel cerrado. */
+  .acordeon-paneles {
+    --panel-cerrado: 22cqw;
+    --panel-abierto: calc(100cqw - (var(--paneles, 3) - 1) * var(--panel-cerrado));
+    flex-direction: row;
+    container-type: inline-size;
+  }
+
+  .acordeon-paneles__panel {
+    flex: 0 0 var(--panel-cerrado);
+    min-width: 0;
+    overflow: hidden;
+    transition: flex var(--duracion-larga) var(--ease);
+  }
+
+  .acordeon-paneles__panel.is-abierto {
+    flex: 1 1 0;
+  }
+
+  /* En los cerrados, todo el panel es el botón */
+  .acordeon-paneles__boton {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    padding: 0;
+  }
+
+  .acordeon-paneles__panel.is-abierto .acordeon-paneles__boton {
+    z-index: 0;
+  }
+
+  /* El título va en vertical y, al abrirse, gira y sube */
+  .acordeon-paneles__titulo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    transition:
+      top var(--duracion-larga) var(--ease),
+      transform var(--duracion-larga) var(--ease);
+  }
+
+  .acordeon-paneles__panel.is-abierto .acordeon-paneles__titulo {
+    top: 48px;
+    transform: translate(-50%, 0) rotate(0deg);
+  }
+
+  /* El texto no ocupa lugar en el panel y siempre tiene el ancho del panel
+     abierto, así no se reacomoda mientras el panel crece */
+  .acordeon-paneles__contenido,
+  .acordeon-paneles__panel.is-abierto .acordeon-paneles__contenido {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    grid-template-rows: 1fr;
+    width: var(--panel-abierto);
+    height: 100%;
+    padding: 124px clamp(32px, 2.5vw, 48px) 48px;
+    opacity: 0;
+    transition:
+      opacity var(--duracion-corta) var(--ease),
+      visibility 0s linear var(--duracion-corta);
+  }
+
+  .acordeon-paneles__panel.is-abierto .acordeon-paneles__contenido {
+    opacity: 1;
+    transition:
+      opacity var(--duracion-larga) var(--ease) 200ms,
+      visibility 0s;
+  }
+
+  /* La imagen ocupa el alto que queda debajo del texto */
+  .acordeon-paneles__interior {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .acordeon-paneles__texto {
+    padding: 0;
+  }
+
+  .acordeon-paneles__imagen {
+    flex: 1 1 0;
+    min-height: 0;
+    margin: 24px 0 0;
+    aspect-ratio: auto;
+  }
+}

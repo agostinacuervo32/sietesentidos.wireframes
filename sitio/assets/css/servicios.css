@@ -1,0 +1,246 @@
+/* ==========================================================================
+   SERVICIOS — Apoyo escolar y Especialidades con video de fondo
+   Móvil (y pantallas táctiles): la información siempre visible, video abajo.
+   Escritorio con cursor: dos videos al 50%; al pasar el cursor, el elegido
+   crece al 70%, el otro se achica al 30% y se despega la ventana con la info.
+   ========================================================================== */
+
+.servicios {
+  padding-bottom: var(--seccion-padding);
+}
+
+.servicios__grilla {
+  display: grid;
+  gap: 48px;
+}
+
+/* ---------- Card de servicio ---------- */
+.card-servicio {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-servicio__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-sm);
+}
+
+.card-servicio__encabezado {
+  position: relative;
+  text-align: center;
+}
+
+.card-servicio__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+}
+
+/* Etiqueta "10% OFF": pill inclinada sobre el título */
+.card-servicio__etiqueta {
+  position: absolute;
+  top: -22px;
+  right: 0;
+  padding: 4px 12px;
+  border-radius: var(--radio-full);
+  background: var(--amarillo-pastel);
+  color: var(--amarillo-oscuro);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-antetitulo);
+  line-height: 1.3;
+  white-space: nowrap;
+  transform: rotate(12deg);
+}
+
+.card-servicio__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  max-width: 65ch;
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-texto-grande);
+  line-height: 1.5;
+  color: var(--negro);
+}
+
+.card-servicio__botones {
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+}
+
+/* ---------- Video de fondo (sin controles, sin sonido, sin interacción).
+   Si todavía no hay video, va una foto con el mismo recorte ---------- */
+.card-servicio__media {
+  position: relative;
+  aspect-ratio: 357 / 210;
+  border-radius: var(--radio);
+  overflow: hidden;
+  background: var(--verde-pastel);
+}
+
+.card-servicio__video,
+.card-servicio__imagen {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Las fotos (verticales) se recortan a la altura de las personas */
+.card-servicio__imagen {
+  object-position: 50% 62%;
+}
+
+/* El nombre sobre el video solo se usa en escritorio */
+.card-servicio__nombre {
+  display: none;
+}
+
+/* ---------- Talleres (Novedades): lista de talleres dentro de la info ----------
+   Lista simple, sin fondo ni padding, para que ocupe el menor espacio posible */
+.card-servicio__talleres {
+  margin-top: -4px;
+  padding-left: 1.2em;
+  list-style: disc;
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-texto-grande);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Escritorio con cursor (desde 1200px, igual que el menú: con menos ancho
+   la ventana no llega a contener los dos botones en una fila)
+   ========================================================================== */
+@media (min-width: 1200px) and (hover: hover) {
+
+  .servicios__grilla {
+    display: flex;
+    gap: 3px;
+    height: clamp(460px, 26.04vw, 500px);   /* 1600 × 500px en el wireframe */
+  }
+
+  .card-servicio {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    cursor: var(--cursor-oscuro);
+    transition: flex-grow var(--duracion-larga) var(--ease);
+  }
+
+  .card-servicio:first-child {
+    border-radius: var(--radio) 0 0 var(--radio);
+  }
+
+  .card-servicio:last-child {
+    border-radius: 0 var(--radio) var(--radio) 0;
+  }
+
+  /* Video a pantalla completa de la card, con capa para leer el título */
+  .card-servicio__media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+
+  .card-servicio__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--negro) 40%, transparent);
+  }
+
+  .card-servicio__nombre {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    font-family: var(--fuente-titulo);
+    font-weight: 800;
+    font-size: var(--fs-h2);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    text-align: center;
+    color: var(--blanco);
+    transition: opacity var(--duracion-corta) var(--ease);
+  }
+
+  /* Ventana con la información: pegada al borde izquierdo, centrada en alto */
+  .card-servicio__info {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 2;
+    /* Ancho pensado para que los dos botones entren en una fila
+       aun con el texto agrandado en hover (+3pt) */
+    width: min(760px, calc(0.7 * (100vw - 2 * var(--margen)) - 32px));
+    padding: 32px clamp(32px, 3.33vw, 64px);
+    border-radius: 0 var(--radio) var(--radio) 0;
+    background: var(--blanco);
+    cursor: var(--cursor-claro);
+    opacity: 0;
+    transform: translate(-100%, -50%);
+    transition:
+      transform var(--duracion-corta) var(--ease),
+      opacity var(--duracion-corta) var(--ease);
+  }
+
+  .card-servicio__encabezado {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .card-servicio__etiqueta {
+    position: static;
+  }
+
+  .card-servicio__texto {
+    font-size: var(--fs-texto-grande);
+  }
+
+  .card-servicio__botones {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top: 8px;
+  }
+
+  /* --- Estados: el cursor manda; sin cursor encima, manda el foco por teclado --- */
+  .servicios__grilla:hover .card-servicio:not(:hover),
+  .servicios__grilla:not(:hover):focus-within .card-servicio:not(:focus-within) {
+    flex-grow: 3;
+  }
+
+  .servicios__grilla .card-servicio:hover,
+  .servicios__grilla:not(:hover) .card-servicio:focus-within {
+    flex-grow: 7;
+  }
+
+  .card-servicio:hover .card-servicio__nombre,
+  .servicios__grilla:not(:hover) .card-servicio:focus-within .card-servicio__nombre {
+    opacity: 0;
+  }
+
+  /* La ventana se despega después de que la card empieza a crecer */
+  .card-servicio:hover .card-servicio__info,
+  .servicios__grilla:not(:hover) .card-servicio:focus-within .card-servicio__info {
+    opacity: 1;
+    transform: translate(0, -50%);
+    transition:
+      transform var(--duracion-larga) var(--ease) 120ms,
+      opacity var(--duracion-corta) var(--ease) 120ms;
+  }
+}

@@ -1,0 +1,201 @@
+/* ==========================================================================
+   EQUIPO (Nosotros) — grilla de integrantes y agradecimiento de la fundadora
+   Wireframe: 3 cards por fila de ~498 × 520px, con nombre y cargo abajo a la
+   izquierda; debajo, el texto de agradecimiento y la foto grupal.
+   Las fotos del equipo van en blanco y negro (style.md).
+   ========================================================================== */
+
+/* ---------- Integrantes ---------- */
+.integrantes {
+  padding-bottom: var(--seccion-padding);
+}
+
+.integrantes__titulo,
+.agradecimiento__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--verde);
+  text-wrap: balance;
+}
+
+.integrantes__grilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: var(--stack-md);
+}
+
+/* Card: forma cerrada con la foto y una etiqueta pastel con nombre y cargo */
+.card-integrante {
+  --etiqueta-color: var(--rosa-pastel);
+  --etiqueta-texto: var(--rosa-oscuro);
+}
+
+.card-integrante--verde {
+  --etiqueta-color: var(--verde-pastel);
+  --etiqueta-texto: var(--verde-oscuro);
+}
+
+.card-integrante--naranja {
+  --etiqueta-color: var(--naranja-pastel);
+  --etiqueta-texto: var(--naranja-oscuro);
+}
+
+.card-integrante--amarillo {
+  --etiqueta-color: var(--amarillo-pastel);
+  --etiqueta-texto: var(--amarillo-oscuro);
+}
+
+.card-integrante__figura {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radio);
+  background-color: var(--etiqueta-color);
+}
+
+.card-integrante__foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: grayscale(1);
+  transition: transform var(--duracion-larga) var(--ease);
+}
+
+.card-integrante:hover .card-integrante__foto {
+  transform: scale(1.03);
+}
+
+.card-integrante__datos {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radio-sm);
+  background-color: var(--etiqueta-color);
+  color: var(--etiqueta-texto);
+}
+
+.card-integrante__nombre {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-integrante-nombre);
+  line-height: 1.2;
+  color: var(--negro);
+}
+
+.card-integrante__cargo {
+  margin-top: 2px;
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-integrante-cargo);
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Agradecimiento ----------
+   Es la última sección antes del footer: no lleva padding abajo, el
+   espacio lo da el padding superior del footer. */
+.agradecimiento__contenedor {
+  display: grid;
+  gap: var(--stack-md);
+}
+
+.agradecimiento__parrafos {
+  display: grid;
+  gap: var(--stack-sm);
+  max-width: 65ch;
+  margin-top: 20px;
+  font-size: var(--fs-texto);
+  line-height: 1.5;
+}
+
+.agradecimiento__firma {
+  margin-top: var(--stack-md);
+  font-size: var(--fs-texto);
+}
+
+.agradecimiento__firma strong {
+  font-weight: 600;
+}
+
+/* Foto grupal con la forma "apretada" arriba y abajo, en blanco y negro */
+.agradecimiento__imagen {
+  overflow: hidden;
+  aspect-ratio: 357 / 253;
+  border-radius: var(--radio);
+  -webkit-mask: var(--mascara-apretada) center / 100% 100% no-repeat;
+  mask: var(--mascara-apretada) center / 100% 100% no-repeat;
+}
+
+.agradecimiento__imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  filter: grayscale(1);
+}
+
+/* ==========================================================================
+   Tablet (desde 768px): 3 cards por fila
+   ========================================================================== */
+@media (min-width: 768px) {
+  .integrantes__grilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .card-integrante__datos {
+    padding: 10px 14px;
+  }
+}
+
+/* ==========================================================================
+   Escritorio (desde 1024px)
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .integrantes__grilla {
+    column-gap: 56px;
+    row-gap: 60px;
+    margin-top: var(--stack-lg);
+  }
+
+  .card-integrante__figura {
+    aspect-ratio: 498 / 520;   /* medida del wireframe */
+  }
+
+  .card-integrante__datos {
+    padding: 12px 18px;
+  }
+
+  /* Texto a la izquierda (785px) y foto a la derecha (775px), alineados arriba */
+  .agradecimiento__contenedor {
+    grid-template-columns: minmax(0, 785fr) minmax(0, 775fr);
+    align-items: start;
+    gap: var(--stack-lg);
+  }
+
+  .agradecimiento__parrafos {
+    margin-top: 24px;
+  }
+
+  .agradecimiento__imagen {
+    aspect-ratio: 531 / 333;   /* más alta para que se vea el grupo completo */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-integrante__foto {
+    transition: none;
+  }
+
+  .card-integrante:hover .card-integrante__foto {
+    transform: none;
+  }
+}

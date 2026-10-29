@@ -1,0 +1,16 @@
+SITIO SIETE SENTIDOS — VERSIÓN WIREFRAME
+
+Cómo abrirlo en VS Code:
+1. Descomprimí el zip y abrí la carpeta "sitio-wireframe" en VS Code (Archivo > Abrir carpeta).
+   Tiene que ser esta carpeta la raíz, porque las rutas empiezan con "/assets/...".
+2. Instalá la extensión "Live Server" (de Ritwick Dey) si no la tenés.
+3. Clic derecho en index.html > "Open with Live Server".
+   Si abrís los .html con doble clic, no se van a ver los estilos.
+
+Qué cambia respecto del sitio original:
+- Todo lo de la capa wireframe está en la carpeta /wf:
+  wf/wireframe.css (grises, placeholders, tipografías locales)
+  wf/wireframe.js  (cambia fotos, videos, agenda y mapa por recuadros con cruz; pone el logo)
+- Cada página carga esos dos archivos al final. El resto es el código del sitio tal cual.
+- Los videos se sacaron (se reemplazan por recuadros).
+- Especialidades y Novedades son las de la primera versión del sitio; usan sus propios estilos en /v1/assets.

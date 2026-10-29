@@ -1,0 +1,475 @@
+/* ==========================================================================
+   FORMULARIO — campos con label flotante
+   El label se ve como placeholder dentro del campo. Al tocar el campo sube
+   al borde superior con una animación; si se sale sin escribir, vuelve a
+   bajar. Funciona solo con CSS: los inputs llevan placeholder=" " y el
+   desplegable, una primera opción vacía (value="").
+   Al subir, el label lleva detrás una pill blanca para leerse sobre el
+   borde del campo. El fondo que rodea a los campos es --campo-entorno.
+   ========================================================================== */
+
+.formulario {
+  --campo-entorno: var(--blanco);
+  --campo-fondo: var(--blanco);
+  --campo-borde: transparent;   /* los campos no llevan borde; solo se marca el error */
+
+  display: grid;
+  gap: 14px;
+}
+
+.formulario__fila {
+  display: grid;
+  gap: inherit;
+}
+
+.formulario__enviar {
+  justify-self: start;
+  margin-top: 6px;
+}
+
+/* ---------- Campo ---------- */
+.campo__caja {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--campo-alto);
+  border: var(--borde-linea) solid var(--campo-borde);
+  border-radius: var(--radio);
+  background: var(--campo-fondo);
+  transition:
+    border-color var(--duracion-corta) var(--ease),
+    outline-color var(--duracion-corta) var(--ease);
+}
+
+.campo__caja:focus-within {
+  outline: var(--borde-linea) solid var(--verde);
+  outline-offset: 2px;
+}
+
+.campo__control {
+  width: 100%;
+  min-width: 0;
+  height: calc(var(--campo-alto) - 2 * var(--borde-linea));
+  padding: 0 var(--campo-padding);
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--color-texto);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-boton);
+  line-height: 1.4;
+}
+
+.campo__control:focus {
+  outline: none;
+}
+
+/* El placeholder real queda vacío: lo que se ve es el label */
+.campo__control::placeholder {
+  color: transparent;
+}
+
+/* ---------- Label flotante ---------- */
+.campo__label {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--campo-inicio, var(--campo-padding)) - 6px);
+  z-index: 1;
+  max-width: calc(100% - var(--campo-inicio, var(--campo-padding)) - 16px);
+  padding: 0 6px;
+  color: var(--color-texto);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 400;
+  font-size: var(--fs-boton);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  transition:
+    top var(--duracion-corta) var(--ease),
+    transform var(--duracion-corta) var(--ease),
+    color var(--duracion-corta) var(--ease);
+}
+
+/* Al subir, el label queda sobre el borde del campo (donde cambia el color
+   del entorno al del campo); una pill blanca detrás lo hace legible */
+.campo__label::before {
+  content: '';
+  position: absolute;
+  inset: -3px 0;
+  z-index: -1;
+  border-radius: 50px;
+  background: var(--blanco);
+  opacity: 0;
+  transition: opacity var(--duracion-corta) var(--ease);
+}
+
+.campo__control:focus ~ .campo__label,
+.campo__control:not(select):not(:placeholder-shown) ~ .campo__label,
+select.campo__control:not(:has(option[value=""]:checked)) ~ .campo__label {
+  top: calc(var(--borde-linea) / -2);
+  color: var(--verde);
+  transform: translateY(-50%) scale(0.78);
+}
+
+.campo__control:focus ~ .campo__label::before,
+.campo__control:not(select):not(:placeholder-shown) ~ .campo__label::before,
+select.campo__control:not(:has(option[value=""]:checked)) ~ .campo__label::before {
+  opacity: 1;
+}
+
+/* ---------- Mensaje (textarea) ---------- */
+.campo--mensaje .campo__caja {
+  align-items: stretch;
+}
+
+.campo--mensaje .campo__control {
+  height: var(--mensaje-alto);
+  padding-block: 14px;
+  resize: vertical;
+}
+
+.campo--mensaje .campo__label {
+  top: 14px;
+  transform: none;
+}
+
+/* ---------- Desplegable ---------- */
+select.campo__control {
+  padding-right: 52px;
+  appearance: none;
+  cursor: var(--cursor-claro);
+}
+
+.campo__chevron {
+  position: absolute;
+  right: 18px;
+  color: var(--verde);
+  pointer-events: none;
+  transition: transform var(--duracion-corta) var(--ease);
+}
+
+/* ---------- Teléfono con prefijo de país ---------- */
+.campo--telefono {
+  --campo-inicio: 78px;   /* el texto arranca después de la bandera */
+}
+
+.campo--telefono .campo__control {
+  padding-left: var(--campo-inicio);
+}
+
+.campo__prefijo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: var(--campo-padding);
+  padding-right: 8px;
+  border-radius: var(--radio) 0 0 var(--radio);
+  color: var(--verde);
+}
+
+.campo__bandera {
+  width: 26px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.campo__prefijo .icono {
+  width: 14px;
+  height: 14px;
+}
+
+/* El select nativo cubre la bandera, invisible: se usa con teclado,
+   lector de pantalla y el selector propio del celular */
+.campo__prefijo-select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  font-size: 16px;   /* evita el zoom de iOS al tocarlo */
+  cursor: var(--cursor-claro);
+}
+
+.campo__prefijo:focus-within {
+  outline: var(--borde-linea) solid var(--verde);
+  outline-offset: -4px;
+}
+
+/* El foco en el prefijo no marca todo el campo */
+.campo--telefono .campo__caja:has(.campo__prefijo-select:focus) {
+  outline: none;
+}
+
+/* ---------- Error ---------- */
+.campo.is-error .campo__caja {
+  --campo-borde: var(--rosa);
+}
+
+.campo.is-error .campo__label {
+  color: var(--rosa-oscuro);
+}
+
+.campo__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 6px 0 0 calc(var(--campo-padding) - 4px);
+  color: var(--rosa-oscuro);   /* el rosa medio no llega a AA sobre los pasteles */
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-aclaracion);
+  line-height: 1.35;
+}
+
+.campo__error[hidden] {
+  display: none;
+}
+
+.campo__error .icono {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  color: var(--rosa);
+}
+
+/* ---------- Leyenda y ayuda (grupos de campos) ---------- */
+.campo__leyenda,
+.opciones__leyenda {
+  margin-bottom: 10px;
+  padding: 0;
+  color: var(--verde);
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-boton);
+  line-height: 1.3;
+}
+
+.campo__requisito {
+  font-weight: 300;
+}
+
+.campo__requisito[hidden],
+.campo__ayuda [hidden] {
+  display: none;
+}
+
+.campo__ayuda {
+  margin: -4px 0 12px;
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-aclaracion);
+  line-height: 1.35;
+}
+
+/* ---------- Opciones (radio en forma de tarjeta) ----------
+   Sin elegir: solo la línea ("abrir"). Elegida: se rellena de blanco
+   ("abrazar") y el círculo se completa. */
+.opciones {
+  min-width: 0;
+  margin: 0 0 4px;
+  padding: 0;
+  border: 0;
+}
+
+.opciones__grilla {
+  display: grid;
+  gap: 12px;
+}
+
+.opcion {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 14px;
+  align-items: center;
+  min-height: var(--campo-alto);
+  padding: 14px var(--campo-padding);
+  border: var(--borde-linea) solid var(--verde);
+  border-radius: var(--radio);
+  color: var(--color-texto);
+  cursor: var(--cursor-claro);
+  transition: background-color var(--duracion-corta) var(--ease);
+}
+
+.opcion:has(.opcion__control:checked) {
+  background: var(--campo-fondo);
+}
+
+.opcion:has(.opcion__control:focus-visible) {
+  outline: var(--borde-linea) solid var(--verde);
+  outline-offset: 2px;
+}
+
+.opcion__control {
+  grid-row: span 2;
+  display: grid;
+  place-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  border: var(--borde-linea) solid var(--verde);
+  border-radius: 50%;
+  appearance: none;
+  cursor: inherit;
+}
+
+.opcion__control::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--verde);
+  transform: scale(0);
+  transition: transform var(--duracion-corta) var(--ease-rebote);
+}
+
+.opcion__control:checked::before {
+  transform: scale(1);
+}
+
+.opcion__control:focus {
+  outline: none;
+}
+
+.opcion__titulo {
+  font-family: var(--fuente-subtitulo);
+  font-weight: 500;
+  font-size: var(--fs-boton);
+  line-height: 1.25;
+  color: var(--verde);
+}
+
+.opcion__texto {
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-aclaracion);
+  line-height: 1.3;
+}
+
+/* ---------- CV: archivo o link ---------- */
+.campo--cv {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.campo-cv__opciones {
+  display: grid;
+  gap: 8px;
+}
+
+.campo-cv__separador {
+  justify-self: center;
+  font-family: var(--fuente-subtitulo);
+  font-size: var(--fs-aclaracion);
+  color: var(--verde);
+}
+
+/* El input nativo cubre toda la caja, invisible: se toca en cualquier
+   parte y se usa con teclado y lector de pantalla */
+.campo-archivo {
+  gap: 12px;
+  padding: 0 12px 0 var(--campo-padding);
+}
+
+.campo-archivo__control {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: var(--cursor-claro);
+}
+
+.campo-archivo__icono {
+  width: 20px;
+  height: 20px;
+  color: var(--verde);
+}
+
+.campo-archivo__nombre {
+  flex: 1;
+  min-width: 0;
+  color: var(--color-texto);
+  font-family: var(--fuente-subtitulo);
+  font-size: var(--fs-boton);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.campo-archivo__quitar {
+  position: relative;
+  z-index: 1;   /* por encima del input invisible */
+  display: grid;
+  place-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: var(--borde-boton) solid var(--verde);
+  border-radius: var(--radio-full);
+  background: transparent;
+  color: var(--verde);
+  cursor: var(--cursor-claro);
+}
+
+.campo-archivo__quitar[hidden] {
+  display: none;
+}
+
+.campo-archivo__quitar .icono {
+  width: 14px;
+  height: 14px;
+}
+
+.campo-archivo__quitar:focus-visible {
+  outline: var(--borde-linea) solid var(--verde);
+  outline-offset: 2px;
+}
+
+/* El foco en el botón de quitar no marca toda la caja */
+.campo-archivo:has(.campo-archivo__quitar:focus) {
+  outline: none;
+}
+
+/* ---------- Estado del envío ---------- */
+.formulario__estado {
+  color: var(--verde);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-aclaracion);
+  line-height: 1.35;
+}
+
+.formulario__estado[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   Desde 768px: Nombre y Teléfono en una misma fila
+   ========================================================================== */
+@media (min-width: 768px) {
+  .formulario {
+    gap: 23px;
+  }
+
+  .formulario__fila,
+  .opciones__grilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+  }
+
+  /* CV: archivo y link en una fila, con la "o" en el medio */
+  .campo-cv__opciones {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 18px;
+  }
+}
