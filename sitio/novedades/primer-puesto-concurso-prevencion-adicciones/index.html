@@ -117,11 +117,6 @@
 
           <div class="nota__datos">
             <time class="nota__fecha" datetime="2026-10-22" data-traducir="fecha">22 de octubre de 2026</time>
-            <!-- Sin JS no se muestra: la nota queda en español -->
-            <button class="btn btn--secundario nota__idioma" type="button" hidden data-idioma-boton>
-              <svg class="icono icono--propio" viewBox="55 80 540 540" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" d="M117,446.58c-13.65-29.35-21.28-62.08-21.28-96.58,0-126.63,102.65-229.28,229.28-229.28s229.28,102.65,229.28,229.28-102.65,229.28-229.28,229.28c-54.08,0-103.79-18.73-143-50.05"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" d="M325.37,579.28c-50.91-46.36-84.96-130.62-84.96-226.88,0-99.67,36.5-186.49,90.44-231.67"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" d="M330.7,579.28c46.88-46.36,78.22-130.62,78.22-226.88,0-99.67-33.61-186.49-83.27-231.67"/><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" x1="104" y1="296.15" x2="541.01" y2="296.15"/><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" x1="119.49" y1="446.28" x2="531.82" y2="446.28"/></svg>
-              <span class="nota__idioma-texto" data-idioma-texto>Leer en inglés</span>
-            </button>
           </div>
         </header>
 
@@ -135,66 +130,30 @@
           </figure>
 
           <div class="nota__texto">
-            <p data-traducir="p1">El grupo “Los Antipantallas”, de la Fundación Siete Sentidos, obtuvo el primer puesto de la Categoría Blanca en el concurso de afiches y videos Gente Bicho de Luz 2025, organizado por la Fundación ProSalud bajo el lema “Comienzo saludable, futuro esperanzador”.</p>
-            <p data-traducir="p2">Con la consigna “Anímate a disfrutar sin pantallas”, el equipo propuso reflexionar sobre el uso excesivo del celular y cómo afecta la salud física, emocional y social de chicos y adultos. Para contarlo, crearon superhéroes que se enfrentan a los celulares, una forma de mostrar la importancia de recuperar el control sobre el tiempo y las actividades del día a día. Como alternativas, el trabajo propone el juego compartido, la actividad física, la lectura y el encuentro con otros sin pantallas de por medio.</p>
-
-            <!-- Foto secundaria dentro del texto -->
-            <figure class="nota__figura nota__figura--texto">
-              <img class="nota__imagen" src="/assets/imagenes/noticias/concurso-2025/equipo-antipantallas.jpg" alt="Integrantes del equipo Antipantallas en el escenario, con el diploma y los obsequios del premio." width="1200" height="1600" loading="lazy" data-traducir-alt="equipo-alt">
-              <figcaption class="nota__epigrafe" data-traducir="equipo-epigrafe">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do.</figcaption>
-            </figure>
-
-            <p data-traducir="p3">El mensaje no plantea eliminar la tecnología, sino construir hogares y comunidades más saludables, donde las pantallas sean una herramienta y no un obstáculo para el bienestar.</p>
-            <p data-traducir="p4">La premiación se realizó en noviembre de 2025, durante la jornada “Saludables, solidarias y disfrutables: ideas y acciones 2025 para la prevención de adicciones”, en la Facultad de Educación y Salud, con el acompañamiento de la Universidad Provincial de Córdoba. Allí, el grupo recibió su diploma y obsequios de los patrocinadores del concurso.</p>
+            <p data-traducir="p1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p data-traducir="p2">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus, nulla gravida orci a odio.</p>
+            <p data-traducir="p3">Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit.</p>
+            <p data-traducir="p4">Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi.</p>
           </div>
 
         </div>
 
-        <!-- Pie: palabras clave. Se ve solo la lista del idioma en que se lee la nota
-             (nota-idioma.js cambia cuál; sin JS queda la de español). -->
+        <!-- Pie: palabras clave -->
         <footer class="nota__pie">
           <div class="nota__claves" lang="es" data-claves="es">
             <p class="nota__claves-titulo">Palabras clave</p>
             <ul class="nota__claves-lista">
-              <li class="nota__clave">Prevención de adicciones</li>
-              <li class="nota__clave">Uso de pantallas</li>
-              <li class="nota__clave">Infancias y tecnología</li>
-              <li class="nota__clave">Gente Bicho de Luz</li>
-              <li class="nota__clave">Fundación ProSalud</li>
-              <li class="nota__clave">Córdoba</li>
-            </ul>
-          </div>
-          <div class="nota__claves" lang="en" data-claves="en" hidden>
-            <p class="nota__claves-titulo">Keywords</p>
-            <ul class="nota__claves-lista">
-              <li class="nota__clave">Addiction prevention</li>
-              <li class="nota__clave">Screen time</li>
-              <li class="nota__clave">Children and technology</li>
-              <li class="nota__clave">Gente Bicho de Luz contest</li>
-              <li class="nota__clave">ProSalud Foundation</li>
-              <li class="nota__clave">Córdoba, Argentina</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
             </ul>
           </div>
         </footer>
 
       </div>
-
-      <!-- Versión en inglés (PROVISORIO: traducción a revisar). No se muestra ni se lee hasta tocar el botón. -->
-      <template class="nota__traduccion" lang="en">
-        <p data-traducir="volver">Back to News</p>
-        <p data-traducir="miga">2025 contest</p>
-        <p data-traducir="volanta">2025 contest</p>
-        <p data-traducir="titulo">“Los Antipantallas”, from Fundación Siete Sentidos, won first place in ProSalud’s addiction prevention contest</p>
-        <p data-traducir="fecha">October 22, 2026</p>
-        <p data-traducir="portada-alt">Three people smile on the award ceremony stage, in front of the ProSalud banner and the Faculty of Education and Health banner.</p>
-        <p data-traducir="portada-epigrafe">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do.</p>
-        <p data-traducir="p1">The group “Los Antipantallas” (The Anti-Screens), from Fundación Siete Sentidos, won first place in the White Category of the Gente Bicho de Luz 2025 poster and video contest, organized by Fundación ProSalud under the motto “Healthy beginning, hopeful future”.</p>
-        <p data-traducir="p2">With the slogan “Dare to enjoy without screens”, the team invited people to reflect on the excessive use of cell phones and how it affects the physical, emotional and social health of children and adults. To tell the story, they created superheroes who take on cell phones, as a way to show how important it is to regain control over our time and everyday activities. As alternatives, the project proposes shared play, physical activity, reading and spending time with others without screens in between.</p>
-        <p data-traducir="equipo-alt">Members of the Antipantallas team on stage, with the diploma and the award gifts.</p>
-        <p data-traducir="equipo-epigrafe">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do.</p>
-        <p data-traducir="p3">The message is not about getting rid of technology, but about building healthier homes and communities, where screens are a tool and not an obstacle to well-being.</p>
-        <p data-traducir="p4">The award ceremony took place in November 2025, during the event “Healthy, supportive and enjoyable: ideas and actions 2025 for addiction prevention”, at the Faculty of Education and Health, with the support of the Universidad Provincial de Córdoba. There, the group received their diploma and gifts from the contest sponsors.</p>
-      </template>
 
     </article>
     <!-- /NOTA -->
@@ -251,10 +210,6 @@
   </footer>
   <!-- /FOOTER -->
 
-  <!-- GSAP + SplitText (gratis desde la 3.13): solo para el cambio de idioma de la nota -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="/assets/js/menu.js" defer></script>
-  <script src="/assets/js/nota-idioma.js" defer></script>
 <script src="/wf/wireframe.js"></script></body>
 </html>

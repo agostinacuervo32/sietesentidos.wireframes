@@ -122,16 +122,11 @@
             <div class="nota__firma">
               <img class="nota__firma-foto" src="/assets/imagenes/equipo/foto-equipo-07.jpg" alt="" width="901" height="901">
               <div class="nota__firma-texto">
-                <p class="nota__firma-nombre">Rocío Godoy</p>
+                <p class="nota__firma-nombre">Lorem ipsum</p>
                 <p class="nota__firma-cargo" data-traducir="cargo">Psicóloga</p>
                 <time class="nota__fecha" datetime="2026-10-07" data-traducir="fecha">7 de octubre de 2026</time>
               </div>
             </div>
-            <!-- Sin JS no se muestra: la nota queda en español -->
-            <button class="btn btn--secundario nota__idioma" type="button" hidden data-idioma-boton>
-              <svg class="icono icono--propio" viewBox="55 80 540 540" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" d="M117,446.58c-13.65-29.35-21.28-62.08-21.28-96.58,0-126.63,102.65-229.28,229.28-229.28s229.28,102.65,229.28,229.28-102.65,229.28-229.28,229.28c-54.08,0-103.79-18.73-143-50.05"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" d="M325.37,579.28c-50.91-46.36-84.96-130.62-84.96-226.88,0-99.67,36.5-186.49,90.44-231.67"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" d="M330.7,579.28c46.88-46.36,78.22-130.62,78.22-226.88,0-99.67-33.61-186.49-83.27-231.67"/><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" x1="104" y1="296.15" x2="541.01" y2="296.15"/><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" x1="119.49" y1="446.28" x2="531.82" y2="446.28"/></svg>
-              <span class="nota__idioma-texto" data-idioma-texto>Leer en inglés</span>
-            </button>
           </div>
         </header>
 
@@ -154,48 +149,21 @@
 
         </div>
 
-        <!-- Pie: palabras clave. Se ve solo la lista del idioma en que se lee la nota
-             (nota-idioma.js cambia cuál; sin JS queda la de español). -->
+        <!-- Pie: palabras clave -->
         <footer class="nota__pie">
           <div class="nota__claves" lang="es" data-claves="es">
             <p class="nota__claves-titulo">Palabras clave</p>
             <ul class="nota__claves-lista">
-              <li class="nota__clave">Uso de pantallas</li>
-              <li class="nota__clave">Infancias</li>
-              <li class="nota__clave">Psicología infantil</li>
-              <li class="nota__clave">Crianza</li>
-              <li class="nota__clave">Familias</li>
-            </ul>
-          </div>
-          <div class="nota__claves" lang="en" data-claves="en" hidden>
-            <p class="nota__claves-titulo">Keywords</p>
-            <ul class="nota__claves-lista">
-              <li class="nota__clave">Screen use</li>
-              <li class="nota__clave">Childhood</li>
-              <li class="nota__clave">Child psychology</li>
-              <li class="nota__clave">Parenting</li>
-              <li class="nota__clave">Families</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
+              <li class="nota__clave">Lorem ipsum</li>
             </ul>
           </div>
         </footer>
 
       </div>
-
-      <!-- Versión en inglés (PROVISORIO: lorem ipsum distinto para que se vea el cambio). No se muestra ni se lee hasta tocar el botón. -->
-      <template class="nota__traduccion" lang="en">
-        <p data-traducir="volver">Back to News</p>
-        <p data-traducir="miga">Screen use</p>
-        <p data-traducir="volanta">Screen use</p>
-        <p data-traducir="titulo">Screen use in childhood</p>
-        <p data-traducir="cargo">Psychologist</p>
-        <p data-traducir="fecha">October 7, 2026</p>
-        <p data-traducir="portada-alt">A girl, seen from behind, sits on the floor looking at a tablet.</p>
-        <p data-traducir="portada-epigrafe">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do.</p>
-        <p data-traducir="p1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        <p data-traducir="p2">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</p>
-        <p data-traducir="p3">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
-        <p data-traducir="p4">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-      </template>
 
     </article>
     <!-- /NOTA -->
@@ -252,10 +220,6 @@
   </footer>
   <!-- /FOOTER -->
 
-  <!-- GSAP + SplitText (gratis desde la 3.13): solo para el cambio de idioma de la nota -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="/assets/js/menu.js" defer></script>
-  <script src="/assets/js/nota-idioma.js" defer></script>
 <script src="/wf/wireframe.js"></script></body>
 </html>
