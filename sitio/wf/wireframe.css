@@ -83,3 +83,7 @@ img.wf-logo{object-fit:contain!important;object-position:center!important;backgr
 /* Talleres sin foto: también recuadro con cruz */
 .card-taller__media--sin-foto{background:var(--wf-ph) var(--wf-x) center/100% 100% no-repeat!important}
 .card-taller__media--sin-foto > svg{visibility:hidden!important}
+
+
+/* Íconos propios de Siete Sentidos (viewBox de 610): mismo trazo que en el sitio (base.css les pone 21) */
+.icono--propio [stroke]{stroke-width:50}
