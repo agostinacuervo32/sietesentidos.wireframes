@@ -85,5 +85,13 @@ img.wf-logo{object-fit:contain!important;object-position:center!important;backgr
 .card-taller__media--sin-foto > svg{visibility:hidden!important}
 
 
-/* Íconos propios de Siete Sentidos (viewBox de 610): mismo trazo que en el sitio (base.css les pone 21) */
-.icono--propio [stroke]{stroke-width:50}
+
+/* Íconos propios un poco más grandes: el HTML usa un viewBox más ajustado (55 80 540 540);
+   el trazo se compensa para que no engorde y overflow visible para que no se recorten */
+.icono--propio [stroke]{stroke-width:44}
+.icono--propio{overflow:visible}
+
+/* Talleres para jóvenes y adultos (Novedades): mismo alto que las cards de servicios del Inicio */
+@media (min-width:1200px) and (hover:hover){
+  .servicios--talleres .servicios__grilla{height:clamp(460px,26.04vw,500px)}
+}

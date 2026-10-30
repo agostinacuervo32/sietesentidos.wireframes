@@ -21,6 +21,9 @@
       if (control.type === 'tel' && valor.replace(/\D/g, '').length < MINIMO_DIGITOS) {
         return control.dataset.errorFormato;
       }
+      if (control.type === 'email' && control.validity.typeMismatch) {
+        return control.dataset.errorFormato;
+      }
       return '';
     }
 
@@ -54,7 +57,7 @@
       return [
         `Hola, soy ${nombre} y quiero consultar por ${servicio}.`,
         mensaje,
-        `(Tel: ${telefono})`
+        `(Tel: ${telefono}${datos.get('mail') ? ` · Mail: ${datos.get('mail').trim()}` : ''})`
       ].filter(Boolean).join(' ');
     }
 

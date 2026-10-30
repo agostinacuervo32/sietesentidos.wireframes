@@ -88,8 +88,9 @@ En `wireframe.css` todas las variables de color del sitio (`--verde`, `--rosa`, 
 ## 4. Contenido de boceto (ya aplicado, mantenerlo así)
 
 - **Bajadas del hero** de cada página: lorem ipsum con unas palabras más o menos que el texto real, para que se vea natural. Si se agrega una página nueva, hacer lo mismo.
-- **Se mantienen con el texto real:** las descripciones de los servicios y el agradecimiento de Nosotros.
-- **Noticias (cards):** título "Titulo de la nota" (así, sin tilde), texto "Acompañamos el aprendizaje de niños y estudiantes, desde nivel inicial hasta secundario." y botón negro "Consultar".
+- **Solo quedan los títulos reales** (de secciones, servicios, talleres, etc.). Todas las descripciones son lorem ipsum, y los elementos del mismo tipo llevan el mismo lorem (opiniones, servicios incluidos, talleres, preguntas y respuestas de las FAQ, cards de noticias...).
+- **Se mantienen con el texto real:** solo Misión, Visión y Valores del Inicio, y todo el footer.
+- **Noticias (cards):** título "Titulo de la nota" (así, sin tilde), extracto en lorem ipsum y botón negro "Consultar".
 - **Equipo (Nosotros):** todas las cards dicen "Ana Rinaldi". La primera lleva el cargo "Fundadora y maestra de apoyo escolar nivel primario" y el resto "Apoyo escolar". Solo foto (placeholder) y texto negro, **sin recuadro de color detrás del nombre**.
 - **Talleres:** todas las cards del mismo gris; la etiqueta inclinada (ej. "Octubre rosa") en `#707070` con letra blanca; la franja "Nuevo" en `#ececec` con letra negra.
 
